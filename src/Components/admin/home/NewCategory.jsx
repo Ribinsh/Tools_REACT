@@ -1,6 +1,40 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 function NewCategory() {
+
+    const cloudAPI ="dk0cl9vtx"
+    
+    const [categoryName,setCategiryName] = useState("")
+    const [description, setDescription] = useState("")
+    const [image, setImage] = useState('')
+    const [imageUrl,setImageUrl] = useState("")
+
+    const handleUpload = async (e) =>{
+        e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('file', image);
+    formData.append('upload_preset', 'Toool');
+    await axios.post(`https://api.cloudinary.com/v1_1/${cloudAPI}/image/upload`, formData)
+    .then((res) => {
+      setImageUrl(res.data.secure_url);
+      axios.post("http://localhost:3000/admin/",{
+        categoryName,
+        description,
+        imageUrl,
+      })
+    }).then((response)=>{
+      toast.success("Category Added Successfully")
+    })
+    .catch((err) => {
+      console.error(err);
+      
+    });
+    }
+
+
   return (
     <div className=' bg-gray-100 py-10 px-44'>
       
@@ -11,13 +45,17 @@ function NewCategory() {
           Add new  Category !
         </h1>
 
-        <form action="" class="space-y-4">
+        <form action={handleUpload} class="space-y-4">
           <div>
-            <label class="" for="name">Category Name</label>
+            <label class=""  for="name">Category Name</label>
             <input
               class="w-full rounded-lg border-gray-200 p-3 text-sm"
               placeholder="Name"
               type="text"
+              value={categoryName}
+              onChange={(e)=>{
+                setCategiryName(e.target.value)
+              }}
               id="name"
             />
           </div>
@@ -28,12 +66,16 @@ function NewCategory() {
               <input
                 class="w-full rounded-lg border-gray-200 p-3 text-sm"
                 placeholder="Describe"
-                type="email"
-                id="email"
+                type="text"
+                value={description}
+                onChange={(e)=>{
+                    setDescription(e.target.value)
+                }}
+                id="description"
               />
             </div>
 
-            <div>
+            {/* <div>
               <label class="" for="phone">Details</label>
               <input
                 class="w-full rounded-lg border-gray-200 p-3 text-sm"
@@ -41,12 +83,12 @@ function NewCategory() {
                 type="text"
                 id="phone"
               />
-            </div>
+            </div> */}
           </div>
 
          
           
-          <div>
+          {/* <div>
             <label class="" for="name">Work</label>
             <input
               class="w-full rounded-lg border-gray-200 p-3 text-sm"
@@ -54,13 +96,17 @@ function NewCategory() {
               type="text"
               id="name"
             />
-          </div>
+          </div> */}
           <div>
             <label class="" for="name">Image</label>
             <input
               class="w-full rounded-lg border-gray-200 p-3 text-sm"
               placeholder=""
               type="file"
+              value={image}
+              onChange={(e)=>{
+               setImage(e.target.value) 
+              }}
               id="name"
             />
           </div>

@@ -29,7 +29,8 @@ function Signup() {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
-      await axios.post('http://localhost:3000/sendOtp',{values}).then(()=>{
+      console.log(values);
+      await axios.post('http://localhost:3000/sendOtp', values ).then(()=>{
         toast.success('Registration successful')
   
         navigate("/otp" ,{replace:true})
@@ -70,7 +71,7 @@ function Signup() {
             Registration  
         </div>
         <div class="">
-          <form action='#'
+          <form 
           onSubmit={formik.handleSubmit}
           >
             <div>

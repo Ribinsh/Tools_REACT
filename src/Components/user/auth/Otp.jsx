@@ -1,10 +1,17 @@
 import axios from "axios"
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast, Toaster } from "react-hot-toast";
 
 function otp() {
+
 const navigate = useNavigate()
 const [otpvalue,setOtpvalue] = useState("")
+const [counter,setCounter] = useState(60)
+
+useEffect(() => {
+  counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+}, [counter]);
 
 const verifyOtp = (e)=>{
     e.preventDefault()
@@ -17,6 +24,27 @@ const verifyOtp = (e)=>{
 
         navigate('/login' ,{replace:true})
     })
+}
+
+const resendOtp = ()=>{
+  toast.success('OTP resending...')
+ try{
+   toast.success("Resending OTP")
+ 
+  axios.get('http://localhost:3000/resendOtp').then((response)=>{
+
+  if(response){
+
+    toast.success('OTP resend successfully')
+    setCounter(60)
+  } else{
+    toast.error("Something Went Wrong")
+  }
+  
+})
+} catch(error){
+  toast.error(error.response.data.error)
+}
 }
 
   return (
@@ -54,6 +82,19 @@ const verifyOtp = (e)=>{
               className="transform rounded-md bg-blue-700 px-8 py-2 text-sm font-medium capitalize tracking-wide text-white transition-colors duration-200 hover:bg-blue-600 focus:bg-blue-600 focus:outline-none sm:mx-2">
                 Verify 
               </button>
+            </div>
+
+            <div className="flex items-center justify-center text-center">
+              {counter ? (
+                <p className="text-lg text-lightBlue">Timer : {counter} Sec</p>
+              ) : (
+                <p className="text-sm text-lightBlue">
+                  Didn't get OTP?
+                  <button className="ml-1  text-green-600" onClick={resendOtp}>
+                    Resend
+                  </button>
+                </p>
+              )}
             </div>
           </div>
         </div>

@@ -378,7 +378,7 @@ function Calender() {
                   </div>
                 </td>
               <td class="border bg-gray-100 p-1 h-40  lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                <div class="flex flex-col h-40 mx-auto  lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
+                <div class="flex flex-col h-40  lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
                   <div class="top h-5 w-full">
                     <span class="text-gray-500">2</span>
                   </div>
@@ -386,7 +386,7 @@ function Calender() {
                 </div>
               </td>
               <td class="border bg-gray-100 p-1 h-40  lg:w-30 md:w-30 sm:w-20 w-10 overflow-auto transition cursor-pointer duration-500 ease hover:bg-gray-300">
-                <div class="flex flex-col h-40 mx-auto  lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
+                <div class="flex flex-col h-40   lg:w-30 md:w-30 sm:w-full w-10 mx-auto overflow-hidden">
                   <div class="top h-5 w-full">
                     <span class="text-gray-500">3</span>
                   </div>

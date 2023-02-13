@@ -20,22 +20,32 @@ function Login() {
     validateOnBlur:false,
     validateOnChange:false,
     onSubmit: async (values) => {
-       axios.post('http://localhost:3000/doLogin',{values}).then((response)=>{
-        console.log(response);
+      try{
+
+        axios.post('http://localhost:3000/doLogin',{values}).then((response)=>{
+         console.log(response);
+         
+         if(response){
+           console.log(response.data);
+           let {token} = response.data
+           localStorage.setItem('token', token)
+           toast.success('login successful')
+           navigate('/', {replace:true})
         
-        if(response){
-          console.log(response.data);
-          let {token} = response.data
-          localStorage.setItem('token', token)
-          toast.success('login successful')
-          navigate('/', {replace:true})
-       
-        }
-      }).catch(error=>{
-        console.log(error);
-          toast.error(error.response.data.error)
-        
-      })
+         }
+       }).catch(error=>{
+         console.log(error);
+         if(error.response){
+
+           toast.error(error.response.data.error)
+         }else{
+          toast.error(error.message)
+         }
+         
+       })
+      }catch (error){
+        toast.error("Something went Wrong")
+      }
     }
   })
 
