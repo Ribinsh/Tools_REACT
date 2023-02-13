@@ -1,34 +1,66 @@
-import React, { useState } from 'react'
+import React from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
+import { useFormik } from 'formik'
+import { siginupValidation } from '../../../middlewares/validationHelper'
 
 
 
 function Signup() { 
   const navigate = useNavigate()
+  
 
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [profession, setProfession] =useState('')
-  const [phone,setPhone] = useState('')
-  const [password,setPassword] = useState('')
+  // const [name, setName] = useState('')
+  // const [email, setEmail] = useState('')
+  // const [profession, setProfession] =useState('')
+  // const [phone,setPhone] = useState('')
+  // const [password,setPassword] = useState('')
 
-  const eventHandler = (e) =>{
-    e.preventDefault()
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      profession:"",
+      phone:"",
+      password: "",
+    },
+    validate :siginupValidation,
+    validateOnBlur: false,
+    validateOnChange: false,
+    onSubmit: async (values) => {
+      await axios.post('http://localhost:3000/sendOtp',{values}).then(()=>{
+        toast.success('Registration successful')
+  
+        navigate("/otp" ,{replace:true})
+      }).catch(error=>{
+        console.log(error);
+          toast.error(error.response.data.error)
+        
+      })
 
-    axios.post("http://localhost:3000/sendOtp",{
-      name,
-      email,
-      profession,
-      phone,
-      password
-    }).then(()=>{
-      toast.success('Registration successful')
+    }
+  })
 
-      navigate("/otp")
-    })
-  }
+  
+  // const eventHandler = (e) =>{
+  //   e.preventDefault()
+
+  //   axios.post("http://localhost:3000/sendOtp",{
+  //     name,
+  //     email,
+  //     profession,
+  //     phone,
+  //     password
+  //   }).then(()=>{
+  //     toast.success('Registration successful')
+
+  //     navigate("/otp" ,{replace:true})
+  //   }).catch(error=>{
+  //     console.log(error);
+  //       toast.error("Something Went Wrong")
+  //     })
+  // }
 
   return (
     <div>
@@ -38,19 +70,20 @@ function Signup() {
             Registration  
         </div>
         <div class="">
-          <form action={eventHandler}>
+          <form action='#'
+          onSubmit={formik.handleSubmit}
+          >
             <div>
-                 <input type="text" value={name} required class="focus:outline-none border-b w-full pb-2 border-sky-400 placeholder-gray-500"
-                  onChange={(e)=>{
-                      setName(e.target.value)
-                 }} 
+                 <input 
+                 {...formik.getFieldProps('name')}
+                 type="text"  required class="focus:outline-none border-b w-full pb-2 border-sky-400 placeholder-gray-500"
+                  
                   placeholder="Name "/>
             </div>
              <div>
-                 <input type="email" value={email} required class="focus:outline-none border-b w-full pb-2 border-sky-400 placeholder-gray-500 my-8" 
-                 onChange={(e)=>{
-                  setEmail(e.target.value)
-                 }}
+                 <input type="email" 
+                 {...formik.getFieldProps('email')} required class="focus:outline-none border-b w-full pb-2 border-sky-400 placeholder-gray-500 my-8" 
+                
                  placeholder="Eamil Adress "/>
             </div>
              {/* <div>
@@ -58,10 +91,10 @@ function Signup() {
             
             </div> */}
             <div>
-            <select required value={profession}
-             onChange={(e)=>{
-              setProfession(e.target.value)
-            }}
+            <select 
+            {...formik.getFieldProps('profession')}
+            required 
+            
              class="focus:outline-none border-b w-full pb-2 border-sky-400 text-gray-500 mb-8"  >
               <option value="">Profession</option>
               <option value="Engineer">Engineer</option>
@@ -70,34 +103,35 @@ function Signup() {
             </select>
             </div>
              <div>
-            <input type="phone" value={phone} required class="focus:outline-none border-b w-full pb-2 border-sky-400 placeholder-gray-500 mb-8" 
-            onChange={(e)=>{
-              setPhone(e.target.value)
-            }}
+            <input
+            {...formik.getFieldProps('phone')} 
+             type="phone" 
+            required class="focus:outline-none border-b w-full pb-2 border-sky-400 placeholder-gray-500 mb-8" 
+            
             placeholder="Phone "/>
             </div>
             <div class="">
-                <input type="password" value={password} required class="focus:outline-none border-b w-full pb-2 border-sky-400 placeholder-gray-500 mb-8"
-                onChange={(e)=>{
-                  setPassword(e.target.value)
-                }}
+                <input
+                {...formik.getFieldProps('password')} type="password" 
+                 required class="focus:outline-none border-b w-full pb-2 border-sky-400 placeholder-gray-500 mb-8"
+               
                 placeholder="Password " />
             </div>
             <div class="flex">
-                <input type="checkbox" required class="border-sky-400 " value="" />
+                <input
+                 type="checkbox" required class="border-sky-400 " value="" />
                 <div class="px-3 text-gray-500">
                     I accept terms & conditions 
                 </div>
             </div>
             <div class="flex justify-center my-6">
-                <button type='submit' onClick={eventHandler} class=" rounded-full  p-3 w-full sm:w-56   bg-gradient-to-r from-sky-600  to-teal-300 text-white text-lg font-semibold " >
+                <button type='submit' class=" rounded-full  p-3 w-full sm:w-56   bg-gradient-to-r from-sky-600  to-teal-300 text-white text-lg font-semibold " >
                     Create Account
                 </button>
             </div>
             <div class="flex justify-center ">
                 <p class="text-gray-500">Already have an acount? </p>
-                {/* <a  onClick={()=>{
-                  navigate('/login')}} class="text-sky-600 pl-2"> Sign In</a> */}
+               
                 <button onClick={()=>{
                   navigate('/login')}} class="text-sky-600 pl-2">Sign In</button>
             </div>

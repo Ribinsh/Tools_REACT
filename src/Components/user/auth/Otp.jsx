@@ -15,7 +15,7 @@ const verifyOtp = (e)=>{
         
     }).then(()=>{
 
-        navigate('/login')
+        navigate('/login' ,{replace:true})
     })
 }
 

@@ -1,69 +1,111 @@
-import React, { useState }  from 'react'
+import React  from 'react'
 import './Login.css'
 import { useNavigate } from 'react-router-dom'
+import {  useFormik } from 'formik'
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
+import { loginValidation } from '../../../middlewares/validationHelper'
 
 
 
 function Login() {
 
   const navigate = useNavigate()
-  const [email,setEmail] = useState("")
-  const [password,setPassword] = useState("")
+  const formik = useFormik({
+    initialValues:{
+      email:"",
+      password:"",
+    },
+    validate: loginValidation,
+    validateOnBlur:false,
+    validateOnChange:false,
+    onSubmit: async (values) => {
+       axios.post('http://localhost:3000/doLogin',{values}).then((response)=>{
+        console.log(response);
+        
+        if(response){
+          console.log(response.data);
+          let {token} = response.data
+          localStorage.setItem('token', token)
+          toast.success('login successful')
+          navigate('/', {replace:true})
+       
+        }
+      }).catch(error=>{
+        console.log(error);
+          toast.error(error.response.data.error)
+        
+      })
+    }
+  })
 
-  const doLogin = (e)=>{
-    e.preventDefault()
+  // const navigate = useNavigate()
+  // const [email,setEmail] = useState("")
+  // const [password,setPassword] = useState("")
 
-    axios.post("http://localhost:3000/doLogin",{
-      email,
-      password
-    }).then((response)=>{
-      console.log(response);
+  // const doLogin = (e)=>{
+  //   e.preventDefault()
+
+  //   axios.post("http://localhost:3000/doLogin",{
+  //     email,
+  //     password
+  //   }).then((response)=>{
+  //     console.log(response);
       
-      if(response){
-        toast.success('login successful')
-        navigate('/')
+  //     if(response){
+  //       console.log(response.data);
+  //       let {token} = response.data
+  //       localStorage.setItem('token',JSON.stringify(token))
+  //       toast.success('login successful')
+  //       navigate('/')
      
-      }
-    }).catch(error=>{
-      console.log(error);
-        toast.error(error.response.data.error)
+  //     }
+  //   }).catch(error=>{
+  //     console.log(error);
+  //       toast.error(error.response.data.error)
       
-    })
-  }
+  //   })
+  // }
   
   return (
     <div>
-      
+     
             <div class="flex h-screen w-full items-center justify-start px-20  bg-[url('/src/assets/images/wallpaperflare.com_wallpaper.jpg')] bg-gray-900 bg-cover bg-no-repeat ">
               <div class="rounded-xl bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
                 <div class="text-black">
                   <div class="mb-8 flex flex-col items-center">
                     <img src="https://www.logo.wine/a/logo/Instagram/Instagram-Glyph-Color-Logo.wine.svg" width="150" alt="" srcset="" />
-                    <h1 class="mb-2 text-2xl">Toools</h1>
+                    <h1 class="mb-2   text-teal-600 text-2xl">Toools</h1>
                     <span class="text-gray-300">Enter Login Details</span>
                   </div>
-                  <form action={doLogin}>
+                  <form action="#"
+                  onSubmit={formik.handleSubmit}
+                  >
                     <div class="mb-4 text-lg">
                       <input
-                      value={email}
-                      onChange={(e)=>{
-                        setEmail(e.target.value)
-                      }}
-                      class="rounded-3xl border-none bg-white bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md" type="text" name="name" placeholder="Enter Email" />
+                      {...formik.getFieldProps('email')}
+                    
+                      type='email'
+                      
+                      
+                      class=" peel rounded-3xl border-none bg-white bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"  placeholder="Enter Email" />
+                      <p class="invisible peer-invalid:visible text-red-700 font-light">
+                      Please enter a valid email address
+                      </p>
                     </div>
 
                     <div class="mb-4 text-lg">
                       <input
-                      value={password}
-                      onChange={(e)=>{
-                        setPassword(e.target.value)
-                      }}
-                      class="rounded-3xl border-none bg-white bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md" type="Password" name="name" placeholder="Password" />
+                      {...formik.getFieldProps('password')}
+                      type="Password" 
+                     
+                      class="  rounded-3xl border-none  bg-white bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"   placeholder="Password" />
+                      {/* <p class="invisible peer-invalid:visible text-red-700 font-light">
+                     This field cannot be empty
+                   </p> */}
                     </div>
                     <div class="mt-8 flex justify-center text-lg text-black">
-                      <button type="submit" onClick={doLogin} class="rounded-3xl bg-yellow-400 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600">Login</button>
+                      <button type="submit" class="rounded-3xl bg-yellow-400 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600">Login</button>
                       
                     </div>
                     <div className='flex justify-center'>

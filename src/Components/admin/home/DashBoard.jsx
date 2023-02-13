@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router-dom'
 function dashBoard() {
 const navigate = useNavigate()
   return (
-    <div>
+    <div className=' top-0'>
         
         
-<body class="font-poppins antialiased">
+<body class="font-poppins antialiased ">
     <div
       id="view"
-      class="h-full  flex "
+      class="h-full  flex  "
       x-data="{ sidenav: true }"
     >
       <button
@@ -81,7 +81,9 @@ const navigate = useNavigate()
           </div>
           <div id="menu" class="flex flex-col space-y-2">
             <a
-              href=""
+               onClick={()=>{
+                navigate('/dashboard')
+              }}
               class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
             >
               <svg
@@ -112,10 +114,11 @@ const navigate = useNavigate()
               </svg>
               <span class="">Products</span>
             </a>
-            <a
-              href={onclick = ()=>{
-                    navigate('/adminUsers')
-              }}
+            <a 
+               onClick={()=>{
+                navigate('/adminUsers')
+               }}
+              
               class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
             >
               <svg
@@ -131,7 +134,9 @@ const navigate = useNavigate()
               <span class="">Customers</span>
             </a>
             <a
-              href=""
+                onClick={()=>{
+                  navigate('/addCategory')
+                }}
               class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
             >
               <svg
@@ -147,10 +152,13 @@ const navigate = useNavigate()
                   clip-rule="evenodd"
                 ></path>
               </svg>
-              <span class="">Reports</span>
+              <span class="">Category</span>
             </a>
             <a
-              href=""
+              href=''
+              onClick={()=>{
+                navigate("/addProduct")
+              }}
               class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
             >
               <svg
@@ -166,10 +174,13 @@ const navigate = useNavigate()
                   d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"
                 ></path>
               </svg>
-              <span class="">Messages</span>
+              <span class="">Add Product</span>
             </a>
             <a
               href=""
+              onClick={()=>{
+                navigate('/admincalender')
+              }}
               class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
             >
               <svg

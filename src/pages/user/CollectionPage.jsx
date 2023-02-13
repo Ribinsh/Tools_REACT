@@ -1,23 +1,19 @@
 import React from 'react'
-import Banner from '../../Components/user/home/Banner'
 import FeaturProduct from '../../Components/user/home/FeaturProduct'
 import Footer from '../../Components/user/home/Footer'
+import Items from '../../Components/user/home/Items'
 import Nav from '../../Components/user/home/Nav'
-import PremiumProduct from '../../Components/user/home/PremiumProduct'
-import Work from '../../Components/user/home/Work'
 
-function HomePage() {
+function CollectionPage() {
   return (
     <div>
         <Nav/>
-        <Banner/>
-        <Work/>
+        <Items/>
         <FeaturProduct/>
-        <PremiumProduct/>
+        <Items/>
         <Footer/>
-        
     </div>
   )
 }
 
-export default HomePage
+export default CollectionPage

@@ -1,0 +1,135 @@
+import React from 'react'
+
+function NewCategory() {
+  return (
+    <div className=' bg-gray-100 py-10 px-44'>
+      
+
+      <div class="rounded-lg bg-green-100 py-3 px-8 shadow-lg lg:col-span-3 lg:p-12">
+      
+      <h1 className="flex` md:px-10 px-5 md:mx-20 mx-5 font-bold text-2xl text-gray-800">
+          Add new  Category !
+        </h1>
+
+        <form action="" class="space-y-4">
+          <div>
+            <label class="" for="name">Category Name</label>
+            <input
+              class="w-full rounded-lg border-gray-200 p-3 text-sm"
+              placeholder="Name"
+              type="text"
+              id="name"
+            />
+          </div>
+
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label class="" for="email">Description</label>
+              <input
+                class="w-full rounded-lg border-gray-200 p-3 text-sm"
+                placeholder="Describe"
+                type="email"
+                id="email"
+              />
+            </div>
+
+            <div>
+              <label class="" for="phone">Details</label>
+              <input
+                class="w-full rounded-lg border-gray-200 p-3 text-sm"
+                placeholder="Add details"
+                type="text"
+                id="phone"
+              />
+            </div>
+          </div>
+
+         
+          
+          <div>
+            <label class="" for="name">Work</label>
+            <input
+              class="w-full rounded-lg border-gray-200 p-3 text-sm"
+              placeholder="Works"
+              type="text"
+              id="name"
+            />
+          </div>
+          <div>
+            <label class="" for="name">Image</label>
+            <input
+              class="w-full rounded-lg border-gray-200 p-3 text-sm"
+              placeholder=""
+              type="file"
+              id="name"
+            />
+          </div>
+
+          {/* <div class="grid grid-cols-1 gap-4 text-center sm:grid-cols-3">
+            <div>
+              <input class="sr-only" id="option1" type="radio" tabindex="-1" />
+              <label
+                for="option1"
+                class="block w-full rounded-lg border border-gray-200 p-3"
+                tabindex="0"
+              >
+                <span class="text-sm font-medium"> Option 1 </span>
+              </label>
+            </div>
+
+            <div>
+              <input class="sr-only" id="option2" type="radio" tabindex="-1" />
+              <label
+                for="option2"
+                class="block w-full rounded-lg border border-gray-200 p-3"
+                tabindex="0"
+              >
+                <span class="text-sm font-medium"> Option 2 </span>
+              </label>
+            </div>
+
+            <div>
+              <input class="sr-only" id="option3" type="radio" tabindex="-1" />
+              <label
+                for="option3"
+                class="block w-full rounded-lg border border-gray-200 p-3"
+                tabindex="0"
+              >
+                <span class="text-sm font-medium"> Option 3 </span>
+              </label>
+            </div>
+          </div> */}
+
+          
+          <div class="mt-4">
+            <button
+              type="submit"
+              class="inline-flex w-full items-center justify-center rounded-lg bg-black px-5 py-3 text-white sm:w-auto"
+            >
+              <span class="font-medium"> Add Category </span>
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="ml-3 h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
+   
+
+    </div>
+  )
+}
+
+export default NewCategory
