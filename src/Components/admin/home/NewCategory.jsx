@@ -1,10 +1,12 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { toast } from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 function NewCategory() {
-
+    const navigate = useNavigate()
     const cloudAPI ="dk0cl9vtx"
+
     
     const [categoryName,setCategiryName] = useState("")
     const [description, setDescription] = useState("")
@@ -16,22 +18,38 @@ function NewCategory() {
 
     const formData = new FormData();
     formData.append('file', image);
-    formData.append('upload_preset', 'Toool');
+    formData.append('upload_preset', 'Tooolshope');
     await axios.post(`https://api.cloudinary.com/v1_1/${cloudAPI}/image/upload`, formData)
-    .then((res) => {
-      setImageUrl(res.data.secure_url);
-      axios.post("http://localhost:3000/admin/",{
+    .then(async(res) => {
+       setImageUrl(res.data.secure_url);
+      console.log(res.data.secure_url);
+      await axios.post("http://localhost:3000/admin/addCategory",{
         categoryName,
         description,
         imageUrl,
       })
-    }).then((response)=>{
-      toast.success("Category Added Successfully")
+      .then((response)=>{ 
+          console.log("image added");
+          console.log(response);
+          if(response){
+              toast.success("Category Added Successfully")
+              navigate("/addCategory")
+  
+          }
+      })
+      .catch(error=>{
+          console.log(error);
+          if(error.response){
+  
+            toast.error(error.response.data.error)
+          }else{
+           toast.error(error.message)
+          }
+          
+        })
     })
-    .catch((err) => {
-      console.error(err);
       
-    });
+   
     }
 
 
@@ -49,6 +67,7 @@ function NewCategory() {
           <div>
             <label class=""  for="name">Category Name</label>
             <input
+            required
               class="w-full rounded-lg border-gray-200 p-3 text-sm"
               placeholder="Name"
               type="text"
@@ -56,6 +75,7 @@ function NewCategory() {
               onChange={(e)=>{
                 setCategiryName(e.target.value)
               }}
+          
               id="name"
             />
           </div>
@@ -64,6 +84,7 @@ function NewCategory() {
             <div>
               <label class="" for="email">Description</label>
               <input
+               required
                 class="w-full rounded-lg border-gray-200 p-3 text-sm"
                 placeholder="Describe"
                 type="text"
@@ -71,6 +92,7 @@ function NewCategory() {
                 onChange={(e)=>{
                     setDescription(e.target.value)
                 }}
+                
                 id="description"
               />
             </div>
@@ -100,12 +122,13 @@ function NewCategory() {
           <div>
             <label class="" for="name">Image</label>
             <input
+            required
               class="w-full rounded-lg border-gray-200 p-3 text-sm"
               placeholder=""
               type="file"
-              value={image}
+              
               onChange={(e)=>{
-               setImage(e.target.value) 
+               setImage(e.target.files[0]) 
               }}
               id="name"
             />
@@ -150,6 +173,7 @@ function NewCategory() {
           <div class="mt-4">
             <button
               type="submit"
+              onClick={handleUpload}
               class="inline-flex w-full items-center justify-center rounded-lg bg-black px-5 py-3 text-white sm:w-auto"
             >
               <span class="font-medium"> Add Category </span>

@@ -97,10 +97,12 @@ function Signup() {
             required 
             
              class="focus:outline-none border-b w-full pb-2 border-sky-400 text-gray-500 mb-8"  >
-              <option value="">Profession</option>
+              <option value="Other"> Choose Profession</option>
               <option value="Engineer">Engineer</option>
               <option value="Contractor">Contractor</option>
               <option value="Welder">Welder</option>
+              <option value="General">General</option>
+              <option value="Other">Other</option>
             </select>
             </div>
              <div>

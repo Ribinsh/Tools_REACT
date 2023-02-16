@@ -1,6 +1,101 @@
-import React from 'react'
+import axios from 'axios';
+// import { useFormik } from 'formik';
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 function AddProduct() {
+    const navigate = useNavigate
+    const cloudAPI ="dk0cl9vtx"
+    const [categories, setCategories] = useState([])
+
+    const[name,setName] = useState('')
+    const[brand, setBrand] = useState('')
+    const[category, setCategory] = useState('')
+    const[price,setPrice] = useState('')
+    const[rentPrice,setRentPrice] = useState('')
+    const[details,setDetails] = useState('')
+    const[productStatus,setProductStatus] = useState('')
+    const[image,setImage] = useState('')
+    const[imageUrl, setImageUrl] = useState('')
+    const [description,setDescription] = useState('')
+
+   
+    // const formik = useFormik({
+    //     initialValues: {
+    //         name: "",
+    //         brand: "",
+    //         category: "",
+    //         price:"",
+    //         rentPrice:"",
+    //         Details: "",
+    //         productStatus:"",
+    //         image
+    //     }
+    // })
+
+    
+    useEffect(() => {
+        axios
+          .get("http://localhost:3000/admin/getCategories")
+          .then((response) => {
+            const categories = response.data.catogories;
+            
+            setCategories(categories);
+          })
+          .catch((error) => {
+            console.log(error);
+            if (error.response) {
+              toast.error(error.response.data.error);
+            } else {
+              toast.error(error.message);
+            }
+          });
+      }, []);
+
+      const handleUpload = async (e) =>{
+        e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('file', image);
+    formData.append('upload_preset', 'product Image');
+    await axios.post(`https://api.cloudinary.com/v1_1/${cloudAPI}/image/upload`, formData)
+    .then(async(res) => {
+       setImageUrl(res.data.secure_url);
+      console.log(res.data.secure_url);
+      await axios.post("http://localhost:3000/admin/addProduct",{
+        name,
+        brand,
+        category,
+        price,
+        rentPrice,
+        details,
+        productStatus,
+        imageUrl,
+        description,
+      })
+      .then((response)=>{ 
+          console.log("image added");
+          console.log(response);
+          if(response){
+              toast.success("Product Added Successfully")
+              navigate("/addProduct")
+  
+          }
+      })
+      .catch(error=>{
+          console.log(error);
+          if(error.response){
+  
+            toast.error(error.response.data.error)
+          }else{
+           toast.error(error.message)
+          }
+          
+        })
+    })
+}
+
+
   return (
     <div>
        
@@ -27,14 +122,19 @@ function AddProduct() {
       </div>
 
       <div class="rounded-lg bg-green-100 p-8 shadow-lg lg:col-span-3 lg:p-12">
-        <form action="" class="space-y-4">
+        <form action={handleUpload} class="space-y-4">
           <div>
             <label class="" for="name">Product Name</label>
             <input
+            required
               class="w-full rounded-lg border-gray-200 p-3 text-sm"
               placeholder="Name"
               type="text"
               id="name"
+              value={name}
+              onChange={(e)=>{
+                  setName(e.target.value)
+              }}
             />
           </div>
 
@@ -42,21 +142,30 @@ function AddProduct() {
             <div>
               <label class="" for="email">Brand </label>
               <input
+                required
                 class="w-full rounded-lg border-gray-200 p-3 text-sm"
                 placeholder="Brand Name"
-                type="email"
+                type="text"
+                value={brand}
+                onChange={(e)=>{
+                    setBrand(e.target.value)
+                }}
                 id="email"
               />
             </div>
 
             <div>
               <label class="" for="phone">Category</label>
-              <input
-                class="w-full rounded-lg border-gray-200 p-3 text-sm"
-                placeholder="Category"
-                type="text"
-                id="phone"
-              />
+             
+              <select required
+               onChange={(e)=>{
+                setCategory(e.target.value)
+              }}
+               class="w-full rounded-lg border-gray-200 p-3 text-sm" name="" id="">
+                { categories.map((data , index)=>(
+                    <option value={data.categoryName}>{data.categoryName}</option>
+                ))}
+              </select>
             </div>
           </div>
 
@@ -64,20 +173,28 @@ function AddProduct() {
             <div>
               <label class="" for="email">Price </label>
               <input
+              required
                 class="w-full rounded-lg border-gray-200 p-3 text-sm"
                 placeholder="Product Price"
                 type="number"
-                id="email"
+                value={price}
+                onChange={(e)=>{
+                    setPrice(e.target.value)
+                }}
               />
             </div>
 
             <div>
               <label class="" for="phone">Rent Price</label>
               <input
+              required
                 class="w-full rounded-lg border-gray-200 p-3 text-sm"
                 placeholder="Rent per day"
                 type="number"
-                id="phone"
+                value={rentPrice}
+                onChange={(e)=>{
+                    setRentPrice(e.target.value)
+                }}
               />
             </div>
             
@@ -85,79 +202,60 @@ function AddProduct() {
           <div>
             <label class="" for="name">Product Details</label>
             <input
+            required
               class="w-full rounded-lg border-gray-200 p-3 text-sm"
               placeholder="Add details"
               type="text"
-              id="name"
+              value={details}
+              onChange={(e)=>{
+                  setDetails(e.target.value)
+              }}
             />
           </div>
           <div>
-            <label class="" for="name">Work</label>
-            <input
-              class="w-full rounded-lg border-gray-200 p-3 text-sm"
-              placeholder="Works"
-              type="text"
-              id="name"
-            />
+            <label htmlFor="">Product status</label>
+            <select required
+            onChange={(e)=>{
+                setProductStatus(e.target.value)
+            }}
+            class="w-full  rounded-lg border-gray-200 p-3 text-sm" name="productStatus" id="">
+                    <option value="none">None</option>
+                    <option value="premium">Premium</option>
+                    <option value="featured">Featured</option>
+            </select>
           </div>
           <div>
             <label class="" for="name">Image</label>
             <input
+            required
               class="w-full rounded-lg border-gray-200 p-3 text-sm"
               placeholder="Works"
               type="file"
               id="name"
+              onChange={(e)=>{
+                setImage(e.target.value)
+              }}
             />
           </div>
 
-          {/* <div class="grid grid-cols-1 gap-4 text-center sm:grid-cols-3">
-            <div>
-              <input class="sr-only" id="option1" type="radio" tabindex="-1" />
-              <label
-                for="option1"
-                class="block w-full rounded-lg border border-gray-200 p-3"
-                tabindex="0"
-              >
-                <span class="text-sm font-medium"> Option 1 </span>
-              </label>
-            </div>
-
-            <div>
-              <input class="sr-only" id="option2" type="radio" tabindex="-1" />
-              <label
-                for="option2"
-                class="block w-full rounded-lg border border-gray-200 p-3"
-                tabindex="0"
-              >
-                <span class="text-sm font-medium"> Option 2 </span>
-              </label>
-            </div>
-
-            <div>
-              <input class="sr-only" id="option3" type="radio" tabindex="-1" />
-              <label
-                for="option3"
-                class="block w-full rounded-lg border border-gray-200 p-3"
-                tabindex="0"
-              >
-                <span class="text-sm font-medium"> Option 3 </span>
-              </label>
-            </div>
-          </div> */}
-
+         
           <div>
             <label class="" for="message">Description</label>
-            <textarea
+            <textarea required
               class="w-full rounded-lg border-gray-200 p-3 text-sm"
               placeholder="Description"
               rows="4"
-              id="message"
+              value={description}
+              onChange={(e)=>{
+                  setDescription(e.target.value)
+              }}
             ></textarea>
           </div>
 
           <div class="mt-4">
             <button
               type="submit"
+               onClick={handleUpload}
               class="inline-flex w-full items-center justify-center rounded-lg bg-black px-5 py-3 text-white sm:w-auto"
             >
               <span class="font-medium"> Add product </span>
