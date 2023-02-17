@@ -11,7 +11,7 @@ function NewCategory() {
     const [categoryName,setCategiryName] = useState("")
     const [description, setDescription] = useState("")
     const [image, setImage] = useState('')
-    const [imageUrl,setImageUrl] = useState("")
+    // const [imageUrl,setImageUrl] = useState("")
 
     const handleUpload = async (e) =>{
         e.preventDefault();
@@ -21,7 +21,8 @@ function NewCategory() {
     formData.append('upload_preset', 'Tooolshope');
     await axios.post(`https://api.cloudinary.com/v1_1/${cloudAPI}/image/upload`, formData)
     .then(async(res) => {
-       setImageUrl(res.data.secure_url);
+       const imageUrl = res.data.secure_url
+    //    setImageUrl(res.data.secure_url);
       console.log(res.data.secure_url);
       await axios.post("http://localhost:3000/admin/addCategory",{
         categoryName,

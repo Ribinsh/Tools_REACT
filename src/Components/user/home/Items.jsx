@@ -1,8 +1,30 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast';
 
 function Items() {
+    const [product,setProduct] = useState([])
+
+    useEffect(()=>{
+        
+        axios
+        .get("http://localhost:3000/getAllProduct")
+        .then((response) => {
+          const data = response.data.product
+          
+          setProduct(data);
+        })
+        .catch((error) => {
+          console.log(error);
+          if (error.response) {
+            toast.error(error.response.data.error);
+          } else {
+            toast.error(error.message);
+          }
+        });
+    },[])
   return (
-    <div>
+    <div className='bg-gray-50'>
         <section>
   <div class="max-w-screen-xl px-4 py-8 mx-auto sm:px-6 sm:py-12 lg:px-8">
     <header>
@@ -18,148 +40,35 @@ function Items() {
     </header>
 
     <ul class="grid gap-4 mt-8 xs:grid-cols-3 sm:grid-cols-3 lg:grid-cols-6">
-      <li>
-        <a href="#" class="block overflow-hidden group">
-          <img
-            src="https://5.imimg.com/data5/HP/PV/MY-18623913/hitachi-professional-hand-drilling-machine-500x500.jpg"
-            alt=""
-            class="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
-          />
 
-          <div class="relative pt-3 bg-white">
-            <h3
-              class="text-xs text-gray-700 group-hover:underline group-hover:underline-offset-4"
-            >
-              Basic Tee
-            </h3>
-
-            <p class="mt-2">
-              <span class="sr-only"> Regular Price </span>
-
-              <span class="tracking-wider text-gray-900"> £24.00 GBP </span>
-            </p>
-          </div>
-        </a>
-      </li>
+        {product.map((product, index)=>(
 
       <li>
         <a href="#" class="block overflow-hidden group">
           <img
-            src="https://5.imimg.com/data5/HP/PV/MY-18623913/hitachi-professional-hand-drilling-machine-500x500.jpg"
+            src={product.imageUrl}
             alt=""
-            class="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
+            class="h-[350px] w-full object-cover  transition duration-500 group-hover:scale-105 sm:h-[450px]"
           />
 
           <div class="relative pt-3 bg-white">
             <h3
               class="text-xs text-gray-700 group-hover:underline group-hover:underline-offset-4"
             >
-              Basic Tee
+              {product.productName}
             </h3>
 
             <p class="mt-2">
               <span class="sr-only"> Regular Price </span>
 
-              <span class="tracking-wider text-gray-900"> £24.00 GBP </span>
+              <span class="tracking-wider text-gray-900"> {product.rentPrice}/DAY </span>
             </p>
           </div>
         </a>
       </li>
+        ))}
 
-      <li>
-        <a href="#" class="block overflow-hidden group">
-          <img
-            src="https://5.imimg.com/data5/HP/PV/MY-18623913/hitachi-professional-hand-drilling-machine-500x500.jpg"
-            alt=""
-            class="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
-          />
-
-          <div class="relative pt-3 bg-white">
-            <h3
-              class="text-xs text-gray-700 group-hover:underline group-hover:underline-offset-4"
-            >
-              Basic Tee
-            </h3>
-
-            <p class="mt-2">
-              <span class="sr-only"> Regular Price </span>
-
-              <span class="tracking-wider text-gray-900"> £24.00 GBP </span>
-            </p>
-          </div>
-        </a>
-      </li>
-
-      <li>
-        <a href="#" class="block overflow-hidden group">
-          <img
-            src="https://5.imimg.com/data5/HP/PV/MY-18623913/hitachi-professional-hand-drilling-machine-500x500.jpg"
-            alt=""
-            class="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
-          />
-
-          <div class="relative pt-3 bg-white">
-            <h3
-              class="text-xs text-gray-700 group-hover:underline group-hover:underline-offset-4"
-            >
-              Basic Tee
-            </h3>
-
-            <p class="mt-2">
-              <span class="sr-only"> Regular Price </span>
-
-              <span class="tracking-wider text-gray-900"> £24.00 GBP </span>
-            </p>
-          </div>
-        </a>
-      </li>
-      <li>
-      <a href="#" class="block overflow-hidden group">
-          <img
-            src="https://5.imimg.com/data5/HP/PV/MY-18623913/hitachi-professional-hand-drilling-machine-500x500.jpg"
-            alt=""
-            class="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
-          />
-
-          <div class="relative pt-3 bg-white">
-            <h3
-              class="text-xs text-gray-700 group-hover:underline group-hover:underline-offset-4"
-            >
-              Basic Tee
-            </h3>
-
-            <p class="mt-2">
-              <span class="sr-only"> Regular Price </span>
-
-              <span class="tracking-wider text-gray-900"> £24.00 GBP </span>
-            </p>
-          </div>
-        </a>
-      </li>
-      <li>
-      <a href="#" class="block overflow-hidden group">
-          <img
-            src="https://5.imimg.com/data5/HP/PV/MY-18623913/hitachi-professional-hand-drilling-machine-500x500.jpg"
-            alt=""
-            class="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
-          />
-
-          <div class="relative pt-3 bg-white">
-            <h3
-              class="text-xs text-gray-700 group-hover:underline group-hover:underline-offset-4"
-            >
-              Basic Tee
-            </h3>
-
-            <p class="mt-2">
-              <span class="sr-only"> Regular Price </span>
-
-              <span class="tracking-wider text-gray-900"> £24.00 GBP </span>
-            </p>
-          </div>
-        </a>
       
-      </li>
     </ul>
   </div>
 </section>

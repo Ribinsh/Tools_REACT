@@ -1,10 +1,11 @@
 import axios from 'axios';
 // import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
 function AddProduct() {
-    const navigate = useNavigate
+    const navigate = useNavigate()
     const cloudAPI ="dk0cl9vtx"
     const [categories, setCategories] = useState([])
 
@@ -16,7 +17,7 @@ function AddProduct() {
     const[details,setDetails] = useState('')
     const[productStatus,setProductStatus] = useState('')
     const[image,setImage] = useState('')
-    const[imageUrl, setImageUrl] = useState('')
+    // const[imageUrl, setImageUrl] = useState('')
     const [description,setDescription] = useState('')
 
    
@@ -60,7 +61,8 @@ function AddProduct() {
     formData.append('upload_preset', 'product Image');
     await axios.post(`https://api.cloudinary.com/v1_1/${cloudAPI}/image/upload`, formData)
     .then(async(res) => {
-       setImageUrl(res.data.secure_url);
+        const imageUrl = res.data.secure_url
+    //    setImageUrl(res.data.secure_url);
       console.log(res.data.secure_url);
       await axios.post("http://localhost:3000/admin/addProduct",{
         name,
@@ -78,7 +80,7 @@ function AddProduct() {
           console.log(response);
           if(response){
               toast.success("Product Added Successfully")
-              navigate("/addProduct")
+              window.location.reload()
   
           }
       })
@@ -162,6 +164,7 @@ function AddProduct() {
                 setCategory(e.target.value)
               }}
                class="w-full rounded-lg border-gray-200 p-3 text-sm" name="" id="">
+                   <option value="General">Choose category</option>
                 { categories.map((data , index)=>(
                     <option value={data.categoryName}>{data.categoryName}</option>
                 ))}
@@ -233,7 +236,7 @@ function AddProduct() {
               type="file"
               id="name"
               onChange={(e)=>{
-                setImage(e.target.value)
+                setImage(e.target.files[0])
               }}
             />
           </div>
