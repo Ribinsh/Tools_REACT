@@ -10,7 +10,7 @@ function CollectionPage() {
         <Nav/>
         <Items/>
         <FeaturProduct/>
-        <Items/>
+       
         <Footer/>
     </div>
   )

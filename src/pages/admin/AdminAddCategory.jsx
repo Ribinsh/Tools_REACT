@@ -9,7 +9,7 @@ function AdminAddCategory() {
         <DashBoard/>
         <div className='w-full'>
             <AdminNav/>
-            <AddCategory/>
+            <AddCategory from="admin"/>
 
         </div>
  

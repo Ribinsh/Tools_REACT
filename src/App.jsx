@@ -10,6 +10,7 @@ import AdminUsers from './pages/admin/AdminUsers'
 import CalenderPage from './pages/admin/CalenderPage'
 import UserProfilePage from './pages/admin/UserProfilePage'
 import BookingPage from './pages/user/BookingPage'
+import CategoryPage from './pages/user/CategoryPage'
 import CollectionPage from './pages/user/CollectionPage'
 import HomePage from './pages/user/HomePage'
 import LoginPage from './pages/user/LoginPage'
@@ -27,6 +28,7 @@ function App() {
           <Route path='/signup' element={<SignupPage/>}/>
           <Route path='/' element={<HomePage/>}/>
           <Route path='/otp' element={<OtpPage/>}/>
+          <Route path='/userCategory' element={<CategoryPage/>}/>
           <Route path='/adminLogin' element={<AdminLoginPage/>}/>
           <Route path='/dashboard' element={<AdminDashboard/>}/>
           <Route path= '/adminUsers' element={<AdminUsers/>}/>

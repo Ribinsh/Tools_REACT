@@ -11,7 +11,19 @@ function NewCategory() {
     const [categoryName,setCategiryName] = useState("")
     const [description, setDescription] = useState("")
     const [image, setImage] = useState('')
+    const [works, setWorks] = useState([])
     // const [imageUrl,setImageUrl] = useState("")
+    
+    const   handleCheckboxChange =(e) =>{
+        
+        const item = e.target.value;
+        if (e.target.checked) {
+          setWorks([...works, item]);
+        } else {
+          setWorks(works.filter((i) => i !== item));
+        }
+        console.log(works);
+    }
 
     const handleUpload = async (e) =>{
         e.preventDefault();
@@ -27,6 +39,7 @@ function NewCategory() {
       await axios.post("http://localhost:3000/admin/addCategory",{
         categoryName,
         description,
+        works,
         imageUrl,
       })
       .then((response)=>{ 
@@ -52,6 +65,8 @@ function NewCategory() {
       
    
     }
+
+
 
 
   return (
@@ -110,16 +125,36 @@ function NewCategory() {
           </div>
 
          
-          
-          {/* <div>
-            <label class="" for="name">Work</label>
-            <input
-              class="w-full rounded-lg border-gray-200 p-3 text-sm"
-              placeholder="Works"
-              type="text"
-              id="name"
-            />
-          </div> */}
+          <div>
+
+            <label class="mt-4" for="name">Choose Work</label>
+          </div>
+          <div className='flex ' >
+            <div className="flex items-center mr-4 mb-4">
+            <input type="checkbox" id="construction" name="Construction" value="construction" onChange={handleCheckboxChange} />
+            <label htmlFor="construction" className="ml-1">Construction</label>
+            </div>
+            <div className="flex items-center mr-4  mb-4">
+            <input type="checkbox" id="engineer" name="Engineer" value="engineer" onChange={handleCheckboxChange} />
+            <label htmlFor="engineer" className="ml-1">Engineer</label>
+            </div>
+            <div className="flex items-center mr-4 mb-4">
+            <input type="checkbox" id="welding" name="Welding" value="welding" onChange={handleCheckboxChange} />
+            <label htmlFor="welding" className="ml-2">Welding</label>
+            </div>
+            <div className="flex items-center mr-4 mb-4">
+            <input type="checkbox" id="general" name="General" value="general" onChange={handleCheckboxChange} />
+            <label htmlFor="general" className="ml-1">General</label>
+            </div>
+            <div className="flex items-center mr-4 mb-4">
+            <input type="checkbox" id="diy" name="DIY" value="diy" onChange={handleCheckboxChange} />
+            <label htmlFor="diy" className="ml-1">DIY</label>
+            </div>
+            <div className="flex items-center mr-4 mb-4">
+            <input type="checkbox" id="worker" name="Worker" value="worker" onChange={handleCheckboxChange} />
+            <label htmlFor="worker" className="ml-1">Worker</label>
+            </div>
+          </div>
           <div>
             <label class="" for="name">Image</label>
             <input
