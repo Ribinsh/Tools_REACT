@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Nav() {
 
@@ -65,12 +65,12 @@ function Nav() {
               </a>
             </li>
             <li>
-              <a
+              <Link to={"/userCategory"}
                 class="text-gray-500 transition hover:text-gray-500/75"
                 href=""
               >
                 Categories
-              </a>
+              </Link>
             </li>
 
             <li>

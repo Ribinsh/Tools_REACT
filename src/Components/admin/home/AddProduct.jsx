@@ -123,7 +123,7 @@ function AddProduct() {
         </div>
       </div>
 
-      <div class="rounded-lg bg-green-100 p-8 shadow-lg lg:col-span-3 lg:p-12">
+      <div class="rounded-lg bg-teal-300 p-8 shadow-lg lg:col-span-3 lg:p-12">
         <form action={handleUpload} class="space-y-4">
           <div>
             <label class="" for="name">Product Name</label>

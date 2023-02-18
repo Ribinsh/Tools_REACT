@@ -8,6 +8,7 @@ import AdminDashboard from './pages/admin/AdminDashboard'
 import AdminLoginPage from './pages/admin/AdminLoginPage'
 import AdminUsers from './pages/admin/AdminUsers'
 import CalenderPage from './pages/admin/CalenderPage'
+import ProductListPage from './pages/admin/ProductListPage'
 import UserProfilePage from './pages/admin/UserProfilePage'
 import BookingPage from './pages/user/BookingPage'
 import CategoryPage from './pages/user/CategoryPage'
@@ -41,6 +42,7 @@ function App() {
           <Route path='/profile' element={<ProfilePage/>}/>
           <Route path='/newCategory' element={<AddCategotyPage/>}/>
           <Route path='/userProfile' element={<UserProfilePage/>}/>
+          <Route path= '/adminProducts' element={<ProductListPage/>}/>
         </Routes>
       </Router>
     <Toaster/>

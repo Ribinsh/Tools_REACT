@@ -1,7 +1,7 @@
 import { data } from "autoprefixer";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function AddCategory(props) {
   const [category, setCategory] = useState([]);
@@ -32,11 +32,12 @@ function AddCategory(props) {
           <section class="mt-6 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-x-6 gap-y-8">
             {category.map((data) => (
              
+             <Link to={"/adminProducts" } state={data.categoryName}>
               <article
                 class={`relative w-full h-64 bg-cover bg-center  group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl  transition duration-300 ease-in-out`}
                  style= {{backgroundImage: `url(${data.imageUrl})`}}
               >
-                <div class="absolute inset-0 bg-black bg-opacity-50 group-hover:opacity-75 transition duration-300 ease-in-out"></div>
+                <div class="absolute bottom-0 right-0 inset-0 bg-black bg-opacity-50 group-hover:opacity-75 transition duration-300 ease-in-out"> <button className="bg-white font-semibold text-gray-600 rounded-md ml-2 mt-2 p-2 ">{data.products}</button></div>
                 <div class="relative  w-full h-full px-4 sm:px-6 lg:px-4 flex justify-center items-center">
                   <h3 class="text-center">
                     <a
@@ -51,6 +52,7 @@ function AddCategory(props) {
                 </div>
                 
               </article>
+             </Link>
             ))
             }
 

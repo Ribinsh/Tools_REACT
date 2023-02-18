@@ -28,6 +28,8 @@ function Items() {
         setChange(false)
     }
 
+    
+
     const filterByCategory =(work) => {
          console.log(work);
         const filteredCategory = categories.filter((category) =>
@@ -35,18 +37,14 @@ function Items() {
            )
            
            if(filteredCategory){
-                console.log(filteredCategory);
                
-               console.log(product);
                let filtered = []
                 filteredCategory.map((category)=>
                     
                        filtered.push( (product.filter((products)=> products.category === category.categoryName) ) 
-                      )
-                   
+                      ) 
                 )
-                console.log(filtered)
-                let resultProduct =[]
+                 let resultProduct =[]
                 for (let [a, b] of filtered) {
                     resultProduct.push(a, b);
                   }
