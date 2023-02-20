@@ -110,9 +110,9 @@ function Login() {
                       type="Password" 
                      
                       class="  rounded-3xl border-none  bg-white bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"   placeholder="Password" />
-                      {/* <p class="invisible peer-invalid:visible text-red-700 font-light">
-                     This field cannot be empty
-                   </p> */}
+                      <p class=" text-red-700 font-semibold">
+                     Forget passord?
+                   </p>
                     </div>
                     <div class="mt-8 flex justify-center text-lg text-black">
                       <button type="submit" class="rounded-3xl bg-yellow-400 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600">Login</button>
