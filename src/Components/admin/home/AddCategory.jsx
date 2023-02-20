@@ -5,6 +5,16 @@ import { Link, useNavigate } from "react-router-dom";
 
 function AddCategory(props) {
   const [category, setCategory] = useState([]);
+  const [search , setSearch] = useState('')
+
+  const searchData = (category) => {
+    return search === ""
+      ? category
+      : category.categoryName.toLowerCase().includes(search) 
+       
+         
+  };
+  
   useEffect(() => {
     axios
       .get("http://localhost:3000/admin/getCategories")
@@ -29,10 +39,24 @@ function AddCategory(props) {
       <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4 mb-12">
         <article>
           <h2 class="text-2xl font-extrabold text-gray-900">CATEGORIES</h2>
+          <form className="w-full max-w-md">
+          <div className="flex items-center border-b-2 border-teal-500 py-2">
+            <input className="appearance-none bg-transparent border-none w-full text-teal-800 mr-3 py-1 px-2 leading-tight focus:outline-none" 
+             onChange={(e) => {
+                        let searchValue = e.target.value.toLocaleLowerCase();
+                        setSearch(searchValue);
+                      }} type="text" placeholder="Search..." aria-label="Search" />
+            <button
+           
+             className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded" type="button">
+              Search
+            </button>
+          </div>
+        </form>
           <section class="mt-6 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-x-6 gap-y-8">
-            {category.map((data) => (
+            {category.filter(searchData).map((data) => (
              
-             <Link to={"/adminProducts" } state={data.categoryName}>
+             <Link to= { props.from ==="admin" ? "/adminProducts" : "/AllItems" } state={data.categoryName}>
               <article
                 class={`relative w-full h-64 bg-cover bg-center  group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl  transition duration-300 ease-in-out`}
                  style= {{backgroundImage: `url(${data.imageUrl})`}}

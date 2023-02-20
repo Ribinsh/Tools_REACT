@@ -10,8 +10,7 @@ function ProdutTable(props) {
     const [tempProduct, setTempProduct] = useState([])
     
     let category = props.category
-    console.log(props.category);
-
+  
     // const filterData =(data)=>{
     //    let  filtered = data.filter((product) =>{
     //        product.category == category
