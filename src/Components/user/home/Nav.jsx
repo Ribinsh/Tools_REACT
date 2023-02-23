@@ -35,9 +35,11 @@ function Nav() {
             />
           </svg>
         </a>
-        <h1 className="flex py-5     font-bold text-2xl  text-teal-600">
+        <Link to={"/"}>
+        <h1 className="flex py-5  cursor-pointer    font-bold text-2xl  text-teal-600">
          Toools
         </h1>
+        </Link>
 
 
       </div>

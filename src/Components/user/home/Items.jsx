@@ -101,7 +101,10 @@ function Items() {
         getCategories()
         
         axios
-        .get("http://localhost:3000/getAllProduct")
+        .get("http://localhost:3000/getAllProduct",
+        {headers : {
+          Authorization : "Bearer " + localStorage.getItem("token"),
+      }})
         .then((response) => {
           const data = response.data.product
           setProduct(data);

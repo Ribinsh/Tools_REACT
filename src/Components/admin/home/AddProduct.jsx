@@ -17,10 +17,13 @@ function AddProduct() {
     const[details,setDetails] = useState('')
     const[productStatus,setProductStatus] = useState('')
     const[image,setImage] = useState('')
-    // const[imageUrl, setImageUrl] = useState('')
+    // const [imageValid, setImageValid] = useState(true);
     const [description,setDescription] = useState('')
 
    
+    // const handleImageError = () => {
+    //   setImageValid(false);
+    // };
     // const formik = useFormik({
     //     initialValues: {
     //         name: "",
@@ -62,7 +65,7 @@ function AddProduct() {
     await axios.post(`https://api.cloudinary.com/v1_1/${cloudAPI}/image/upload`, formData)
     .then(async(res) => {
         const imageUrl = res.data.secure_url
-    //    setImageUrl(res.data.secure_url);
+    
       console.log(res.data.secure_url);
       await axios.post("http://localhost:3000/admin/addProduct",{
         name,

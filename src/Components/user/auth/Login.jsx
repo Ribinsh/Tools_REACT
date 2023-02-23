@@ -1,6 +1,6 @@
 import React  from 'react'
 import './Login.css'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {  useFormik } from 'formik'
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
@@ -28,7 +28,7 @@ function Login() {
          if(response){
            console.log(response.data);
            let {token} = response.data
-           localStorage.setItem('token', token)
+           localStorage.setItem('token', JSON.stringify(token))
            toast.success('login successful')
            navigate('/', {replace:true})
         
@@ -49,33 +49,7 @@ function Login() {
     }
   })
 
-  // const navigate = useNavigate()
-  // const [email,setEmail] = useState("")
-  // const [password,setPassword] = useState("")
-
-  // const doLogin = (e)=>{
-  //   e.preventDefault()
-
-  //   axios.post("http://localhost:3000/doLogin",{
-  //     email,
-  //     password
-  //   }).then((response)=>{
-  //     console.log(response);
-      
-  //     if(response){
-  //       console.log(response.data);
-  //       let {token} = response.data
-  //       localStorage.setItem('token',JSON.stringify(token))
-  //       toast.success('login successful')
-  //       navigate('/')
-     
-  //     }
-  //   }).catch(error=>{
-  //     console.log(error);
-  //       toast.error(error.response.data.error)
-      
-  //   })
-  // }
+ 
   
   return (
     <div>
@@ -110,9 +84,11 @@ function Login() {
                       type="Password" 
                      
                       class="  rounded-3xl border-none  bg-white bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"   placeholder="Password" />
-                      <p class=" text-red-700 font-semibold">
-                     Forget passord?
-                   </p>
+                      <Link to={"/forgetPassword"}>
+                         <p class=" text-red-700 font-semibold">
+                            Forgot passord?
+                         </p>
+                      </Link>
                     </div>
                     <div class="mt-8 flex justify-center text-lg text-black">
                       <button type="submit" class="rounded-3xl bg-yellow-400 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600">Login</button>

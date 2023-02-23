@@ -1,6 +1,7 @@
 
 import { Toaster } from 'react-hot-toast'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import ForgetPassword from './Components/user/auth/ForgetPassword'
 import AddCategotyPage from './pages/admin/AddCategotyPage'
 import AddProductPage from './pages/admin/AddProductPage'
 import AdminAddCategory from './pages/admin/AdminAddCategory'
@@ -19,6 +20,7 @@ import OrdersPage from './pages/user/OrdersPage'
 import OtpPage from './pages/user/OtpPage'
 import ProfilePage from './pages/user/ProfilePage'
 import SignupPage from './pages/user/SignupPage'
+import AdminProductPage from './pages/admin/AdminProductPage'
 
 function App() {
   return (
@@ -43,6 +45,8 @@ function App() {
           <Route path='/newCategory' element={<AddCategotyPage/>}/>
           <Route path='/userProfile' element={<UserProfilePage/>}/>
           <Route path= '/adminProducts' element={<ProductListPage/>}/>
+          <Route path='/forgetPassword' element= {<ForgetPassword/>}/>
+          <Route path='/adminSingleProduct' element = {<AdminProductPage/>}/>
         </Routes>
       </Router>
     <Toaster/>

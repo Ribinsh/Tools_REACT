@@ -142,7 +142,7 @@ function ProdutTable(props) {
                                                 alt="" />
                                         </div>
                                        
-                                        <Link to="" state={data._id} class="ml-3">
+                                        <Link to="/adminSingleProduct" state={data._id} class="ml-3">
                                         <span
                                         class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                                         <span aria-hidden

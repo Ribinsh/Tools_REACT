@@ -1,6 +1,38 @@
+import axios from 'axios'
 import React from 'react'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import { toast } from 'react-hot-toast'
 
 function Orders() {
+   const [bookings,setBookings] = useState([])
+      console.log(bookings);
+   const getBookings = () => {
+    axios.get("http://localhost:3000/getBooking",
+     { headers : {
+         Authorization : "Bearer " + localStorage.getItem("token"),
+     }})
+     .then((response) => {
+      console.log(response);
+      let allOrders = response.data.allOrders
+     
+      setBookings(allOrders)
+     })
+     .catch((error) => {
+       console.log(error);
+       if (error.response) {
+         toast.error(error.response.data.error);
+       } else {
+         toast.error(error.message);
+       }
+     })
+   }
+
+   useEffect(()=> {
+        getBookings()  
+   },[])
+
+
   return (
     <div>
        
@@ -23,108 +55,55 @@ function Orders() {
           </tr>
         </thead>
         <tbody class="bg-white">
-          <tr class="text-gray-700">
+        
+          {bookings.reverse().map((data )=>(
+
+        <tr class="text-gray-700">
             <td class="px-4 py-3 border">
               <div class="flex items-center text-sm">
                 <div class="relative w-8 h-8 mr-3 rounded-full md:block">
-                  <img class="object-cover w-full h-full rounded-full" src="https://5.imimg.com/data5/HP/PV/MY-18623913/hitachi-professional-hand-drilling-machine-500x500.jpg" alt="" loading="lazy" />
+                  <img class="object-cover w-full h-full rounded-full" src={data.productId.imageUrl} alt="" loading="lazy" />
                   <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
                 </div>
                 <div>
-                  <p class="font-semibold text-black">Driller</p>
-                  <p class="text-xs text-gray-600">Hitachi</p>
+                  <p class="font-semibold text-black">{data.productId.productName}</p>
+                  <p class="text-xs text-gray-600">{data.productId.brandName}</p>
                 </div>
               </div>
             </td>
-            <td class="px-4 py-3 text-ms font-semibold border">200</td>
-            <td class="px-4 py-3 text-sm border">6/4/2000</td>
-            <td class="px-4 py-3 text-sm border">8/4/2000</td>
-            <td class="px-4 py-3 text-ms font-semibold border">2</td>
+            <td class="px-4 py-3 text-ms font-semibold border">{data.totalPrice}</td>
+            <td class="px-4 py-3 text-sm border">{data.dates[0]}</td>
+            <td class="px-4 py-3 text-sm border">{data.dates[data.dates.length-1]}</td>
+            <td class="px-4 py-3 text-ms font-semibold border">{data.totalDays}</td>
             <td class="px-4 py-3 text-xs border">
-              <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"> Returned </span>
+              { data.orderStatus === "Booked" &&
+              <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"> Booked </span>
+            } 
+            {data.orderStatus === "Renting" &&
+                         <span class="px-2 py-1 font-semibold leading-tight text-yellow-500 bg-gray-100 rounded-sm"> Renting </span>
+            }
+             {data.orderStatus === "Returned" &&
+              <span class="px-2 py-1 font-semibold leading-tight text-blue-500 bg-gray-100 rounded-sm"> Returned </span>
+             }
+
             </td>
             <td class="px-4 py-3 text-xs border">
+              {data.paymentStatus === "Not paid" &&
+                 <button
+                  className='cursor-pointer'>
+
+                   <span class="px-2 py-1 font-semibold leading-tight text-blue-400 bg-gray-100 rounded-sm"> Pay now </span>
+                 </button>
+              }
+              {data.paymentStatus === "Paid" &&
               <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"> Paid </span>
+              }
             </td>
           </tr>
-          <tr class="text-gray-700">
-            <td class="px-4 py-3 border">
-              <div class="flex items-center text-sm">
-                <div class="relative w-8 h-8 mr-3 rounded-full">
-                  <img class="object-cover w-full h-full rounded-full" src="https://5.imimg.com/data5/HP/PV/MY-18623913/hitachi-professional-hand-drilling-machine-500x500.jpg" alt="" loading="lazy" />
-                  <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                </div>
-                <div>
-                  <p class="font-semibold text-black">Chain Saw</p>
-                  <p class="text-xs text-gray-600">Machine</p>
-                </div>
-              </div>
-            </td>
-            <td class="px-4 py-3 text-md font-semibold border">270</td>
-            <td class="px-4 py-3 text-sm border">6/10/2020</td>
-            <td class="px-4 py-3 text-sm border">7/10/2020</td>
-            <td class="px-4 py-3 text-ms font-semibold border">2</td>
+          ))}
 
-            <td class="px-4 py-3 text-xs border">
-              <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-gray-100 rounded-sm"> Delay </span>
-            </td>
 
-            <td class="px-4 py-3 text-xs border">
-              <span class="px-2 py-1 font-semibold leading-tight text-orange-700 bg-gray-100 rounded-sm"> Delay </span>
-            </td>
-          </tr>
-          <tr class="text-gray-700">
-            <td class="px-4 py-3 border">
-              <div class="flex items-center text-sm">
-                <div class="relative w-8 h-8 mr-3 rounded-full">
-                  <img class="object-cover w-full h-full rounded-full" src="https://5.imimg.com/data5/HP/PV/MY-18623913/hitachi-professional-hand-drilling-machine-500x500.jpg" alt="" loading="lazy" />
-                  <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                </div>
-                <div>
-                  <p class="font-semibold text-black">Chain Saw</p>
-                  <p class="text-xs text-gray-600">Machine</p>
-                </div>
-              </div>
-            </td>
-            <td class="px-4 py-3 text-md font-semibold border">150</td>
-            <td class="px-4 py-3 text-sm border">6/10/2020</td>
-            <td class="px-4 py-3 text-sm border">7/10/2020</td>
-            <td class="px-4 py-3 text-ms font-semibold border">1</td>
-
-            <td class="px-4 py-3 text-xs border">
-              <span class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-gray-100 rounded-sm"> Renting </span>
-            </td>
-
-            <td class="px-4 py-3 text-xs border">
-              <span class="px-2 py-1 font-semibold leading-tight text-blue-400 bg-gray-100 rounded-sm"> Pay now </span>
-            </td>
-          </tr>
-          <tr class="text-gray-700">
-            <td class="px-4 py-3 border">
-              <div class="flex items-center text-sm">
-                <div class="relative w-8 h-8 mr-3 rounded-full">
-                  <img class="object-cover w-full h-full rounded-full" src="https://5.imimg.com/data5/HP/PV/MY-18623913/hitachi-professional-hand-drilling-machine-500x500.jpg" alt="" loading="lazy" />
-                  <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                </div>
-                <div>
-                  <p class="font-semibold text-black">Chain Saw</p>
-                  <p class="text-xs text-gray-600">Machine</p>
-                </div>
-              </div>
-            </td>
-            <td class="px-4 py-3 text-md font-semibold border">200</td>
-            <td class="px-4 py-3 text-sm border">6/10/2020</td>
-            <td class="px-4 py-3 text-sm border">7/10/2020</td>
-            <td class="px-4 py-3 text-ms font-semibold border">5</td>
-
-            <td class="px-4 py-3 text-xs border">
-              <span class="px-2 py-1 font-semibold leading-tight text-blue-700 bg-gray-100 rounded-sm"> Renting </span>
-            </td>
-
-            <td class="px-4 py-3 text-xs border">
-              <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-gray-100 rounded-sm"> Paid </span>
-            </td>
-          </tr>
+         
          
         </tbody>
       </table>
