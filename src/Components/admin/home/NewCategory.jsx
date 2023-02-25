@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+// import { FileExtension } from 'file-type'
 
 function NewCategory() {
     const navigate = useNavigate()
@@ -25,6 +26,19 @@ function NewCategory() {
         console.log(works);
     }
 
+    // function handleImageChange(event) {
+    //   const file = event.target.files[0];
+    //   const reader = new FileReader();
+    //   reader.onloadend = function () {
+    //     const buffer = Buffer.from(reader.result);
+    //     const fileInfo = fileType(buffer);
+    //     if (!fileInfo || !/^image\/(jpe?g|png)$/i.test(fileInfo.mime)) {
+    //        toast.error("invalid Image type")
+    //     }
+    //   };
+    //   reader.readAsArrayBuffer(file);
+    // }
+
     const handleUpload = async (e) =>{
         e.preventDefault();
 
@@ -47,7 +61,7 @@ function NewCategory() {
           console.log(response);
           if(response){
               toast.success("Category Added Successfully")
-              navigate("/addCategory")
+              navigate("/admin/addCategory")
   
           }
       })

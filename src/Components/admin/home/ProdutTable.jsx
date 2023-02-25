@@ -24,7 +24,7 @@ function ProdutTable(props) {
 
     const getAllProduct = () =>{
         axios
-        .get("http://localhost:3000/getAllProduct")
+        .get("http://localhost:3000/admin/getAllproducts")
         .then((response) => {
           const data = response.data.product
           setProduct(data) 
@@ -142,7 +142,7 @@ function ProdutTable(props) {
                                                 alt="" />
                                         </div>
                                        
-                                        <Link to="/adminSingleProduct" state={data._id} class="ml-3">
+                                        <Link to="/admin/adminSingleProduct" state={data._id} class="ml-3">
                                         <span
                                         class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                                         <span aria-hidden
@@ -189,7 +189,7 @@ function ProdutTable(props) {
                                      }
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                    {!data.listingStatus == "Unlist" && 
+                                    {data.listingStatus == "List" && 
                                     <span
                                         class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                                         <span aria-hidden

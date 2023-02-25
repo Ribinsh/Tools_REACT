@@ -35,7 +35,7 @@ function FeaturProduct() {
     const BookProduct = () =>{
         axios.post("http://localhost:3000/toBookProduct",{productName},{
             headers : {
-                Authorization : "Bearer" + localStorage.getItem("token"),
+                Authorization : "Bearer " + localStorage.getItem("token"),
             }
         }).then((response)=>{
                

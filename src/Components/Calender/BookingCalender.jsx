@@ -8,6 +8,7 @@ import {
     format,
     getDay,
     isEqual,
+    isPast,
     isSameDay,
     isSameMonth,
     isToday,
@@ -16,6 +17,8 @@ import {
     startOfToday,
   } from 'date-fns'
   import { useState } from 'react'
+import axios from 'axios'
+import { toast } from 'react-hot-toast'
   let colStartClasses = [
     '',
     'col-start-2',
@@ -27,7 +30,7 @@ import {
   ]
   
   const meetings = []
-// const [bookings ,setBookings] = useState()
+
    
   
   
@@ -36,15 +39,34 @@ import {
   } 
 function BookingCalender(props) {
     let today = startOfToday()
-   
+    let productId = props.productId
   let [selectedDay, setSelectedDay] = useState(today)
   const[bookedDates,setBookedDate] = useState([])
+  const[blockDates,setBlockDates] = useState([])
   const lengthOfarray = bookedDates.length
-//   const [date, setDates] = useState([])
+   console.log(blockDates);
+   console.log("...."+bookedDates);
+
+
   let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
   let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date())
 
   const saveDate = (day) => {
+    if (isPast(day) && !isToday(day)) {
+        // disable the button
+        toast.error("You cant select past days")
+        return
+      }
+      if (isToday(day)) {
+        // disable the button
+        toast.error("It is Today!")
+        return
+      }
+      if (isBlocked(day)) {
+        // disable the button
+        toast.error("Already Booked for the date")
+        return
+      }
      setSelectedDay(day) 
     if( bookedDates.some((data) => data.getTime() === day.getTime())){
         const newArray = [...bookedDates];
@@ -56,7 +78,7 @@ function BookingCalender(props) {
        
           setBookedDate(finalArray);
         console.log( finalArray)
-        // props.updateData(bookedDates.length)
+      
        
     }else{
 
@@ -67,12 +89,25 @@ function BookingCalender(props) {
     
   }
 
+ 
+
   function isHighlighted(date) {
     
     return bookedDates.some((data) => data.getTime() === date.getTime())
  
-   
   }
+
+
+  function isBlocked(date) {
+    if(blockDates != null){
+        
+          return blockDates.some((data) =>
+          //  console.log(date)
+          new Date(data).getTime() === date.getTime()
+          //  data.getTime()=== date.getTime()
+          )
+        }
+    }
 
   let days = eachDayOfInterval({
     start: firstDayCurrentMonth,
@@ -89,7 +124,25 @@ function BookingCalender(props) {
     setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
   }
 
+  const getDates =async () => {
+    await axios
+    .get(`http://localhost:3000/getDates/${productId}`)
+    .then((response) => {
+     
+       setBlockDates(response.data.orderedDates);
+    })
+    .catch((error) => {
+      
+      if (error.message) {
+        toast.error(error.response);
+      } else {
+        toast.error(error.message);
+      }
+    });
+  }
+
  useEffect(() =>{
+    getDates()
     props.updateData(bookedDates.length)
     props.updateDates(bookedDates)
  },[selectedDay])
@@ -144,13 +197,18 @@ function BookingCalender(props) {
                 >
                   <button
                     type="button"
+                   
                     onClick={() => saveDate(day) }
                     className={classNames(
                       isHighlighted(day) &&  !isToday(day) && 'bg-gray-500 text-white',
+                      
+                        isBlocked(day) && !isToday(day) &&   !isPast(day) && "bg-green-600 text-white",
+                        isBlocked(day) && !isToday(day) &&   isPast(day) && "bg-green-200 text-white",
                     //   isEqual(day, selectedDay ) && 'text-white',
                       !isEqual(day, selectedDay) &&
                         isToday(day) &&
                         'text-white bg-red-500',
+                        isPast(day) && !isBlocked(day) && !isToday(day) &&" text-gray-400" , 
                       !isEqual(day, selectedDay) &&
                         !isToday(day) &&
                         isSameMonth(day, firstDayCurrentMonth) &&

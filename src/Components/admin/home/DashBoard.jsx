@@ -58,7 +58,7 @@ const navigate = useNavigate()
           <div id="menu" class="flex flex-col space-y-2">
             <a
                onClick={()=>{
-                navigate('/dashboard')
+                navigate('/admin/dashboard')
               }}
               class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
             >
@@ -76,7 +76,7 @@ const navigate = useNavigate()
             </a>
             <a
               onClick={()=>{
-                navigate('/adminProducts')
+                navigate('/admin/adminProducts')
                }}
               
               class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
@@ -95,7 +95,7 @@ const navigate = useNavigate()
             </a>
             <a 
                onClick={()=>{
-                navigate('/adminUsers')
+                navigate('/admin/adminUsers')
                }}
               
               class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
@@ -114,7 +114,7 @@ const navigate = useNavigate()
             </a>
             <a
                 onClick={()=>{
-                  navigate('/addCategory')
+                  navigate('/admin/addCategory')
                 }}
               class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
             >
@@ -136,7 +136,7 @@ const navigate = useNavigate()
             <a
              
               onClick={()=>{
-                navigate("/addProduct")
+                navigate("/admin/addProduct")
               }}
               class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
             >
@@ -155,7 +155,7 @@ const navigate = useNavigate()
             <a
               
               onClick={()=>{
-                navigate('/admincalender')
+                navigate('/admin/admincalender')
               }}
               class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
             >

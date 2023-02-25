@@ -19,7 +19,7 @@ function AddCategory(props) {
     axios
       .get("http://localhost:3000/admin/getCategories")
       .then((response) => {
-        const categories = response.data.catogories;
+        const categories = response.data.categories;
         
         setCategory(categories);
       })
@@ -56,7 +56,7 @@ function AddCategory(props) {
           <section class="mt-6 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-x-6 gap-y-8">
             {category.filter(searchData).map((data) => (
              
-             <Link to= { props.from ==="admin" ? "/adminProducts" : "/AllItems" } state={data.categoryName}>
+             <Link to= { props.from ==="admin" ? "/admin/adminProducts" : "/AllItems" } state={data.categoryName}>
               <article
                 class={`relative w-full h-64 bg-cover bg-center  group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl  transition duration-300 ease-in-out`}
                  style= {{backgroundImage: `url(${data.imageUrl})`}}
@@ -82,7 +82,7 @@ function AddCategory(props) {
 
             <button
               onClick={() => {
-                navigate("/newCategory");
+                navigate("/admin/newCategory");
               }}
             >
                 {props.from === "admin" && 

@@ -32,21 +32,22 @@ function App() {
           <Route path='/' element={<HomePage/>}/>
           <Route path='/otp' element={<OtpPage/>}/>
           <Route path='/userCategory' element={<CategoryPage/>}/>
-          <Route path='/adminLogin' element={<AdminLoginPage/>}/>
-          <Route path='/dashboard' element={<AdminDashboard/>}/>
-          <Route path= '/adminUsers' element={<AdminUsers/>}/>
-          <Route path='/addCategory' element={<AdminAddCategory/>}/>
           <Route path='/Booking' element= {<BookingPage/>}/>
           <Route path='/Orders' element= {<OrdersPage/>}/>
           <Route path='/AllItems' element={<CollectionPage/>}/>
-          <Route path='/admincalender' element={<CalenderPage/>}/>
-          <Route path='/addProduct' element= {<AddProductPage/>}/>
           <Route path='/profile' element={<ProfilePage/>}/>
-          <Route path='/newCategory' element={<AddCategotyPage/>}/>
           <Route path='/userProfile' element={<UserProfilePage/>}/>
-          <Route path= '/adminProducts' element={<ProductListPage/>}/>
           <Route path='/forgetPassword' element= {<ForgetPassword/>}/>
-          <Route path='/adminSingleProduct' element = {<AdminProductPage/>}/>
+
+          <Route path='/admin/admincalender' element={<CalenderPage/>}/>
+          <Route path= '/admin/adminUsers' element={<AdminUsers/>}/>
+          <Route path='/admin/addProduct' element= {<AddProductPage/>}/>
+          <Route path='/admin/dashboard' element={<AdminDashboard/>}/>
+          <Route path='/admin/addCategory' element={<AdminAddCategory/>}/>
+          <Route path='/admin/adminLogin' element={<AdminLoginPage/>}/>
+          <Route path='/admin/newCategory' element={<AddCategotyPage/>}/>
+          <Route path= '/admin/adminProducts' element={<ProductListPage/>}/>
+          <Route path='/admin/adminSingleProduct' element = {<AdminProductPage/>}/>
         </Routes>
       </Router>
     <Toaster/>

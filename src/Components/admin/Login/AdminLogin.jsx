@@ -16,7 +16,7 @@ function AdminLogin() {
             password
         }).then((response)=>{
             toast.success('Login successful')
-            navigate('/dashboard')
+            navigate('/admin/dashboard')
         }).catch(error=>{
             console.log("error");
                    toast.error("Something went wrong")

@@ -60,7 +60,7 @@ function adminNav() {
       <div class="flex items-center gap-4">
         <div class="sm:flex sm:gap-4">
          <a onClick={()=>{
-            navigate("/adminLogin")
+            navigate("/admin/adminLogin")
          }} 
             class="rounded-md bg-teal-600 px-5 cursor-pointer py-2.5 text-sm font-medium text-white shadow"
             

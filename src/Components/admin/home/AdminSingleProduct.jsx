@@ -475,7 +475,7 @@ function AdminSingleProduct() {
                { product.listingStatus === "List" && 
                      <button  onClick={unListProduct}
                      type="button"
-                     class="w-36 ml-3 rounded bg-gradient-to-r from-red-500 to-orange-500 px-8  py-3 text-sm font-bold uppercase tracking-wide text-white"
+                     class="w-36 ml-3 rounded bg-gradient-to-r from-rose-600 to-stone-800 px-8  py-3 text-sm font-bold uppercase tracking-wide text-white"
                    >
                        Unlist
                    </button>
