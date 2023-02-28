@@ -164,10 +164,10 @@ const options = { year: 'numeric', month: 'long', day: 'numeric' };
                           Renting
                         </span>
                       )}
-                      {data.orderStatus === "Returned" && (
+                      {data.orderStatus === "Completed" && (
                         <span className="px-2 py-1 font-semibold leading-tight text-blue-500 bg-gray-100 rounded-sm">
                           
-                          Returned
+                        Completed
                         </span>
                       )}
                     </td>
@@ -189,15 +189,15 @@ const options = { year: 'numeric', month: 'long', day: 'numeric' };
                             className="cursor-pointer"
                           >
                             <span className="px-2 py-1 font-semibold leading-tight text-blue-400 bg-gray-100 rounded-sm">
-                              {" "}
-                              Pay now{" "}
+                              
+                              Pay now
                             </span>
                           </button>
                         )
                       ) : (
                         <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">
-                          {" "}
-                          Paid{" "}
+                          
+                          Paid
                         </span>
                       )}
                     </td>

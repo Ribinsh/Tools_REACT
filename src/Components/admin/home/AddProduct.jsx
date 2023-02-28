@@ -42,7 +42,7 @@ function AddProduct() {
         axios
           .get("http://localhost:3000/admin/getCategories")
           .then((response) => {
-            const categories = response.data.catogories;
+            const categories = response.data.categories;
             
             setCategories(categories);
           })

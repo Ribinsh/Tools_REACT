@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 function userProfile() {
     const navigate = useNavigate()
     const location = useLocation()
+    const [block, setBlock] = useState("newUser")
     const userId = location?.state
 
     const [user,setUser] = useState('')
@@ -15,7 +16,7 @@ function userProfile() {
         .get(`http://localhost:3000/admin/blockUser/${userId}`)
         .then((response) => {
           toast.success("Blocked")
-          window.location.reload()
+          setBlock("Blocked")
         })
         .catch((error) => {
           console.log(error);
@@ -32,7 +33,7 @@ function userProfile() {
         .get(`http://localhost:3000/admin/unBlockUser/${userId}`)
         .then((response) => {
           toast.success("Unblocked")
-          window.location.reload()
+          setBlock("Unblocked")
         })
         .catch((error) => {
           console.log(error);
@@ -60,7 +61,7 @@ function userProfile() {
             toast.error(error.message);
           }
         });
-      }, []);
+      }, [block]);
   return (
     <div>
          <div class="h-full bg-gray-200 p-8">
@@ -126,7 +127,7 @@ function userProfile() {
         <div class="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
           <div class="flex items-center space-x-4 mt-2">
             {user.status == "Unblocked" &&
-            <button class="flex items-center bg-green-200    text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
+            <button class="flex items-center bg-green-500    text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
              
               <span className='font-semibold text-green-900'>Active</span>
             </button>
@@ -134,7 +135,7 @@ function userProfile() {
              {user.status == "Blocked" &&
             <button class="flex items-center bg-red-600    text-gray-100 px-4 py-2 rounded text-sm space-x-2 transition duration-100">
              
-              <span className='font-semibold text-green-900'>Inactive</span>
+              <span className='font-semibold text-grey-900'>Inactive</span>
             </button>
             }
 

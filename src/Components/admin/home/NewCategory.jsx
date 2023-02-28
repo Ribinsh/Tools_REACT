@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { useEffect } from 'react'
 import { toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 // import { FileExtension } from 'file-type'
@@ -8,7 +9,7 @@ function NewCategory() {
     const navigate = useNavigate()
     const cloudAPI ="dk0cl9vtx"
 
-    
+    const [allCategories,setAllCategories] = useState([])
     const [categoryName,setCategiryName] = useState("")
     const [description, setDescription] = useState("")
     const [image, setImage] = useState('')
@@ -25,6 +26,28 @@ function NewCategory() {
         }
         console.log(works);
     }
+  
+
+    useEffect(() => {
+      axios
+        .get("http://localhost:3000/admin/getCategories")
+        .then((response) => {
+          console.log(response);
+          const categories = response.data.categories;
+          const names= categories.filter((data)=> data.categoryName )
+          console.log("jgjgjgj" +names);
+          setAllCategories(categories);
+          
+        })
+        .catch((error) => {
+          console.log(error);
+          if (error.response) {
+            toast.error(error.response.data.error);
+          } else {
+            toast.error(error.message);
+          }
+        });
+    }, []);
 
     // function handleImageChange(event) {
     //   const file = event.target.files[0];
@@ -41,7 +64,13 @@ function NewCategory() {
 
     const handleUpload = async (e) =>{
         e.preventDefault();
+        console.log(allCategories);
+        if (allCategories.includes(categoryName)) {
+          toast.error("Category Already exist")
+          return
+        }
 
+       
     const formData = new FormData();
     formData.append('file', image);
     formData.append('upload_preset', 'Tooolshope');
@@ -103,6 +132,11 @@ function NewCategory() {
               type="text"
               value={categoryName}
               onChange={(e)=>{
+                if (allCategories.includes(e.target.value)) {
+                  toast.warning("Category Already exist")
+                  
+                }
+        
                 setCategiryName(e.target.value)
               }}
           

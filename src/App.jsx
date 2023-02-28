@@ -21,6 +21,7 @@ import OtpPage from './pages/user/OtpPage'
 import ProfilePage from './pages/user/ProfilePage'
 import SignupPage from './pages/user/SignupPage'
 import AdminProductPage from './pages/admin/AdminProductPage'
+import AllOrdersPage from './pages/admin/AllOrdersPage'
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
           <Route path='/admin/newCategory' element={<AddCategotyPage/>}/>
           <Route path= '/admin/adminProducts' element={<ProductListPage/>}/>
           <Route path='/admin/adminSingleProduct' element = {<AdminProductPage/>}/>
+          <Route path='/admin/allOrders' element={<AllOrdersPage/>}/>
         </Routes>
       </Router>
     <Toaster/>

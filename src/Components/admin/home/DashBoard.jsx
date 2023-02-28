@@ -1,7 +1,12 @@
 import React from 'react'
+import { useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 function dashBoard() {
+
+  const [selectedButton,setSelectedButton] = useState("dashboard")
+
 const navigate = useNavigate()
   return (
     <div className=''>
@@ -15,7 +20,7 @@ const navigate = useNavigate()
     >
       <button
         
-        class="p-2 border-2 bg-white rounded-md border-gray-200 shadow-lg text-gray-500 focus:bg-teal-500 focus:outline-none focus:text-white absolute top-0 left-0 sm:hidden"
+        class= "p-2 border-2 bg-white rounded-md border-gray-200 shadow-lg text-gray-500 focus:bg-teal-500 focus:outline-none  focus:text-white absolute top-0 left-0 sm:hidden"
       >
         <svg
           class="w-5 h-5 fill-current"
@@ -58,9 +63,10 @@ const navigate = useNavigate()
           <div id="menu" class="flex flex-col space-y-2">
             <a
                onClick={()=>{
+                setSelectedButton("dashboard")
                 navigate('/admin/dashboard')
               }}
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out"
+              class={`${selectedButton === "dashboard" ? "bg-teal-500 text-base" : "bg-white"} text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out`}
             >
               <svg
                 class="w-6 h-6 fill-current inline-block"
@@ -76,10 +82,11 @@ const navigate = useNavigate()
             </a>
             <a
               onClick={()=>{
+                setSelectedButton("products")
                 navigate('/admin/adminProducts')
                }}
               
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+              class={`${selectedButton === "products" ? "bg-teal-500 text-base" : "bg-white"} text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out `}
             >
               <svg
                 class="w-6 h-6 fill-current inline-block"
@@ -95,10 +102,11 @@ const navigate = useNavigate()
             </a>
             <a 
                onClick={()=>{
+                setSelectedButton("customers")
                 navigate('/admin/adminUsers')
                }}
               
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+              class={` ${selectedButton === "customers" ? "bg-teal-500 text-base" : "bg-white"} text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out`}
             >
               <svg
                 class="w-6 h-6 fill-current inline-block"
@@ -114,9 +122,10 @@ const navigate = useNavigate()
             </a>
             <a
                 onClick={()=>{
+                  setSelectedButton("category")
                   navigate('/admin/addCategory')
                 }}
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+              class={`${selectedButton === "category" ? "bg-teal-500 text-base" : "bg-white"} text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out`}
             >
               <svg
                 class="w-6 h-6 fill-current inline-block"
@@ -136,9 +145,10 @@ const navigate = useNavigate()
             <a
              
               onClick={()=>{
+                setSelectedButton("addProducts")
                 navigate("/admin/addProduct")
               }}
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+              class={`${selectedButton === "addProducts" ? "bg-teal-500 text-base" : "bg-white"} text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out`}
             >
               <svg
                 class="w-6 h-6 fill-current inline-block"
@@ -155,9 +165,10 @@ const navigate = useNavigate()
             <a
               
               onClick={()=>{
+                setSelectedButton("calender")
                 navigate('/admin/admincalender')
               }}
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+              class={`${selectedButton === "calender" ? "bg-teal-500 text-base" : "bg-white"} text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out`}
             >
               <svg
                 class="w-6 h-6 fill-current inline-block"
@@ -174,8 +185,11 @@ const navigate = useNavigate()
               <span class="cursor-pointer">Calendar</span>
             </a>
             <a
-              href=""
-              class="text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out"
+              onClick={() => {
+                setSelectedButton("allOrders")
+                navigate("/admin/allOrders")
+              }}
+              class={`${selectedButton === "allOrders" ? "bg-teal-500 text-base" : "bg-white"} text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out`}
             >
               <svg
                 class="w-6 h-6 fill-current inline-block"
@@ -189,7 +203,7 @@ const navigate = useNavigate()
                   clip-rule="evenodd"
                 ></path>
               </svg>
-              <span class="cursor-pointer">Table</span>
+              <span class="cursor-pointer"> All Orders</span>
             </a>
            
             
