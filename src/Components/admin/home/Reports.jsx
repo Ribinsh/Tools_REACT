@@ -3,7 +3,7 @@ import React from 'react'
 function Reports() {
   return (
     <div>
-        <div class=" flex w-full bg-gray-200  items-center justify-center px-5 py-5">
+        <div class=" flex w-full bg-teal-500  items-center justify-center px-5 py-5">
     <div class="w-full max-w-3xl">
         <div class="-mx-2 md:flex">
             <div class="w-full md:w-1/3 px-2">

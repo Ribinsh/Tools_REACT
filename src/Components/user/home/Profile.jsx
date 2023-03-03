@@ -1,151 +1,285 @@
 import React from 'react'
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { toast } from 'react-hot-toast';
+import axios from '../../../axios'
 
 function Profile() {
+
+    const [user, setUser] = useState('')
+
+    const options = { year:"numeric", month: "long", day: "numeric" };
+  const formattedDate = (date) => {
+    const dateObj = new Date(date);
+    const updatedDate = dateObj.toLocaleDateString("en-US", options);
+    return updatedDate;
+  };
+    
+    const getProfile = () =>{
+        axios.get("/getProfile",  {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }).then((response) => {
+            let userData = response.data.userData
+            console.log(userData);
+            setUser(userData)
+          })
+          .catch((error) => {
+            console.log(error);
+            if (error.response) {
+              toast.error(error.response.data.error);
+            } else {
+              toast.error(error.message);
+            }
+          });
+    }
+
+    useEffect(() => {
+      getProfile()
+    },[])
+
   return (
-    <div>
+    <div className='bg-emerald-100'>
         
-<div
-                                            class="h-full flex flex-col bg-gray-100  shadow-xl overflow-y-scroll">
-                                            <div class="ml-3 h-7 flex justify-end items-center">
-                                                <button type="button"
-                                                    class="bg-gray-100  m-1 p-3 justify-end rounded-md text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-indigo-500">
-                                                    <span class="sr-only">Close panel</span>
-                                                  
-                                                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg"
-                                                        fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                                        aria-hidden="true">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                            <div class="bg-green-300 shadow-lg pb-3 rounded-b-3xl">
-                                                <div
-                                                    class="flex  rounded-b-3xl bg-gray-100 space-y-5 flex-col items-center py-7">
-                                                    <img class="h-28 w-28 rounded-full"
-                                                        src="https://i.pinimg.com/originals/4c/41/ef/4c41eff22888e5e5d8277cf5121691db.png"
-                                                        alt="User"/>
-                                                    <a href="#"> <span
-                                                            class="font-bold text-2xl  text-teal-600 ">Ribinsh</span></a>
-                                                </div>
-                                                <div
-                                                    class="grid px-7 py-2  items-center justify-around grid-cols-3 gap-4 divide-x divide-solid ">
-                                                    <div class="col-span-1 flex flex-col items-center ">
-                                                        <span class="text-2xl font-bold dark:text-gray-500">4</span>
-                                                        <span class="text-lg font-medium 0">Rentings</span>
-                                                    </div>
-                                                    <div class="col-span-1 px-3 flex flex-col items-center ">
-                                                        <span class="text-2xl font-bold dark:text-gray-500">
-                                                        Engineer</span>
-                                                        <span class="text-lg font-medium">Profession</span>
-                                                    </div>
-                                                    <div class="col-span-1 px-3 flex flex-col items-center ">
-                                                        <span class="text-2xl font-bold dark:text-gray-500">
-                                                            546</span>
-                                                        <span class="text-lg font-medium">Wallet Money</span>
-                                                    </div>
-                                                </div>
+    
+    {/* <div>
+         <div class="h-full bg-gray-200 p-8">
+      <div class="bg-white rounded-lg shadow-xl pb-8">
+        <div
+          x-data="{ openSettings: false }"
+          class="absolute right-12 mt-4 rounded"
+        >
+          <button
+            class="border border-gray-400 p-2 rounded text-gray-300 hover:text-gray-300 bg-gray-100 bg-opacity-10 hover:bg-opacity-20"
+            title="Settings"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="3"
+                d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+              ></path>
+            </svg>
+          </button>
+         
+        </div>
+        <div class="w-full h-[250px] bg-fixed bg-cover  bg-[url(https://res.cloudinary.com/dk0cl9vtx/image/upload/v1676526848/Products/p7f0xmuefhdpjfqniomn.png)] bg-center">
+          
+        </div>
+        <div class="flex flex-col items-center -mt-20">
+          <img
+            src="https://us.123rf.com/450wm/lacheev/lacheev2109/lacheev210900016/lacheev210900016.jpg?ver=6"
+            class="w-40 border-4 border-white rounded-full"
+          />
+          <div class="flex items-center space-x-2 mt-2">
+            <p class="text-2xl">{user.name}</p>
+            <span class="bg-blue-500 rounded-full p-1" title="Verified">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="text-gray-100 h-2.5 w-2.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="4"
+                  d="M5 13l4 4L19 7"
+                ></path>
+              </svg>
+            </span>
+          </div>
+          <p class="text-gray-700">Engineer</p>
+          <p class="text-sm text-gray-500">Kerala</p>
+        </div>
+        <div class="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
+          <div class="flex items-center space-x-4 mt-2">
+           
 
-                                            </div>
+          </div>
+        </div>
 
-                                            <div
-                                                class="grid rounded-2xl divide-y divide-dashed hover:divide-solid  justify-evenly bg-gray-50 dark:bg-gray-300 m-3 mt-10 grid-cols-3">
-                                                <div class="col-span-1  p-3">
-                                                    <div class="flex flex-col items-center ">
-                                                        <a href=""> <button
-                                                                class="tr-300">
-                                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                                    class="h-14 w-14 text-gray-500" fill="none"
-                                                                    viewBox="0 0 24 24" stroke="currentColor"
-                                                                    stroke-width="2">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                                        d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                                </svg>
-                                                                <span class="text-lg font-medium">Address</span>
-                                                            </button></a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-span-1  p-3">
-                                                    <div class="flex flex-col items-center ">
-                                                        <a href=""> <button
-                                                                class="tr-300">
-                                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                                    class="h-14 w-14 text-gray-500" fill="none"
-                                                                    viewBox="0 0 24 24" stroke="currentColor"
-                                                                    stroke-width="2">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                                        d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                                                                </svg>
-                                                                <span class="text-lg font-medium">Payments</span>
-                                                            </button></a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-span-1  p-3">
-                                                    <div class="flex flex-col items-center ">
-                                                        <a href=""> <button
-                                                                class="tr-300">
-                                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                                    class="h-14 w-14 text-gray-500" fill="none"
-                                                                    viewBox="0 0 24 24" stroke="currentColor"
-                                                                    stroke-width="2">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                                        d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
-                                                                </svg>
-                                                                <span class="text-lg font-medium">Notifications</span>
-                                                            </button></a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-span-1  p-3">
-                                                    <div class="flex flex-col items-center ">
-                                                        <a href="">
-                                                            <button class="tr-300">
-                                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                                    class="h-14 w-14 text-gray-500" fill="none"
-                                                                    viewBox="0 0 24 24" stroke="currentColor"
-                                                                    stroke-width="2">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                                                </svg>
-                                                                <span class="text-lg font-medium">Edit Details</span>
-                                                            </button></a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-span-1  p-3">
-                                                    <div class="flex flex-col items-center ">
-                                                        <a href=""> <button class="tr-300">
-                                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                                    class="h-14 w-14 text-gray-500" fill="none"
-                                                                    viewBox="0 0 24 24" stroke="currentColor"
-                                                                    stroke-width="2">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                                                </svg>
-                                                                <span class="text-lg font-medium">History</span>
-                                                            </button></a>
-                                                    </div>
-                                                </div>
-                                                <div class="col-span-1 bg-red-200 p-3">
-                                                    <div class="flex  flex-col items-center ">
-                                                        <a href=""> <button class="tr-300">
-                                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                                    class="h-14 w-14 text-gray-500" fill="none"
-                                                                    viewBox="0 0 24 24" stroke="currentColor"
-                                                                    stroke-width="2">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                                                </svg>
-                                                                <span class="text-lg font-medium">Logout</span>
-                                                            </button></a>
-                                                    </div>
-                                                </div>
-                                            </div>
+        <div class="my-4 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
+          <div class="w-full flex flex-col 2xl:w-1/3">
+            <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
+              <h4 class="text-xl text-gray-900 font-bold">
+                 Personal Info
+              </h4>
+              <ul class="mt-2 text-gray-700">
+                <li class="flex border-y py-2">
+                  <span class="font-bold w-24">Full name:</span>
+                  <span class="text-gray-700">{user.name}</span>
+                </li>
+                <li class="flex border-y py-2">
+                  <span class="font-bold w-24"> Rentings:</span>
+                  <span class="text-green-600 font-bold ">{user.rentings}</span>
+                </li>
+               
+                <li class="flex border-b py-2">
+                  <span class="font-bold w-24">Joined:</span>
+                  <span class="text-gray-700">{user.joined}</span>
+                </li>
+                <li class="flex border-b py-2">
+                  <span class="font-bold w-24">Mobile:</span>
+                  <span class="text-gray-700">{user.phone}</span>
+                </li>
+                <li class="flex border-b py-2">
+                  <span class="font-bold w-24">Email:</span>
+                  <span class="text-gray-700">{user.email}</span>
+                </li>
+                <li class="flex border-b py-2">
+                  <span class="font-bold w-24">Location:</span>
+                  <span class="text-gray-700">Kerala</span>
+                </li>
+                <li class="flex border-b py-2">
+                  <span class="font-bold w-24">Gender:</span>
+                  <span class="text-gray-700">{user.gender}</span>
+                </li>
+             
+                <li class="flex items-center border-b py-2 space-x-2">
+                  <span class="font-bold w-24">Address:</span>
+                  <span class="text-gray-700">{user.address}</span>
+                 
+                </li>
+              </ul>
+            </div>
+            
+          </div>
+          <div class="flex flex-col w-full 2xl:w-2/3">
+            <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
+              <h4 class="text-xl text-gray-900 font-bold">About</h4>
+              <p class="mt-2 text-gray-700">
+                Contrary to popular belief, Lorem Ipsum is not simply random
+                text. It has roots in a piece of classical Latin literature from
+                45 BC, making it over 2000 year Richard McClintock, a Latin
+                professor at Hampden-Sydney College in Virginia, looked up one
+                of the more obscure Latin words, consecteturLorem ipsum dolor
+                sit amet consectetur adipisicing elit. Nesciunt voluptates
+                obcaecati numquam error et ut fugiat asperiores. Sunt nulla ad
+                incidunt laboriosam, laudantium est unde natus cum numquam,
+                neque facere. Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. Ut, magni odio magnam commodi sunt ipsum eum! Voluptas
+                eveniet aperiam at maxime, iste id dicta autem odio laudantium
+                eligendi commodi distinctio!
+              </p>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    </div> */}
 
-                                            <div class="flex mx-auto mt-3 w-100 ">
-                                                <a href=""> <button
-                                                        class="p-2 shadow-lg rounded-2xl tr-300 w-100 font-medium  bg-green-500 rounded-md hover:bg-green-600 text-gray-50">Mejorar
-                                                        membresía</button></a>
-                                            </div>
-                                        </div>
+
+<a
+  href="#"
+  class="relative block overflow-hidden rounded-lg border border-gray-100 px-20 sm:p-6 lg:p-20"
+>
+  <span
+    class="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"
+  ></span>
+
+  <div class="sm:flex sm:justify-between sm:gap-4">
+    <div>
+      <h3 class="text-2xl font-bold text-gray-900 ">
+      {user.name}
+      </h3>
+
+      <p class="mt-1 text-sm font-medium text-gray-600">{user.profession}</p>
+    </div>
+
+    <div class="hidden sm:block sm:shrink-0">
+      <img
+        alt="Paul Clapton"
+        src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
+        class="h-40 w-40 rounded-lg object-cover shadow-sm"
+      />
+    </div>
+  </div>
+
+  <div>
+    <span>Orders Completed : </span>
+    <span className='text-green-600 font-bold'> {user.Rentings}</span>
+        
+    
+  </div>
+  <div>
+    <p>{user.phone}</p>
+    <p>{user.email}</p>
+  </div>
+
+  <div class="mt-4">
+   
+  </div>
+
+  <dl class="mt-6 flex gap-4 sm:gap-6">
+    <div class="flex flex-col-reverse">
+      <dt class="text-sm font-medium text-gray-600">Joined</dt>
+      <dd class="text-xs text-gray-500">{formattedDate(user.joined)}</dd>
+    </div>
+
+   
+  </dl>
+<div class="my-4 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
+          <div class="w-1/2 flex flex-col 2xl:w-1/3">
+            <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
+              <h4 class="text-xl text-gray-900 font-bold">
+                 Personal Info
+              </h4>
+              <ul class="mt-2 text-gray-700">
+                <li class="flex border-y py-2">
+                  <span class="font-bold w-24">Full name:</span>
+                  <span class="text-gray-700">{user.name}</span>
+                </li>
+                <li class="flex border-y py-2">
+                  <span class="font-bold w-24"> Rentings:</span>
+                  <span class="text-green-600 font-bold ">{user.Rentings}</span>
+                </li>
+               
+                <li class="flex border-b py-2">
+                  <span class="font-bold w-24">Joined:</span>
+                  <span class="text-gray-700">{formattedDate(user.joined) }</span>
+                </li>
+                <li class="flex border-b py-2">
+                  <span class="font-bold w-24">Mobile:</span>
+                  <span class="text-gray-700">{user.phone}</span>
+                </li>
+                <li class="flex border-b py-2">
+                  <span class="font-bold w-24">Email:</span>
+                  <span class="text-gray-700">{user.email}</span>
+                </li>
+                <li class="flex border-b py-2">
+                  <span class="font-bold w-24">Location:</span>
+                  <span class="text-gray-700">Kerala</span>
+                </li>
+                <li class="flex border-b py-2">
+                  <span class="font-bold w-24">Gender:</span>
+                  <span class="text-gray-700">{user.gender}</span>
+                </li>
+             
+                <li class="flex items-center border-b py-2 space-x-2">
+                  <span class="font-bold w-24">Address:</span>
+                  <span class="text-gray-700">{user.address}</span>
+                 
+                </li>
+              </ul>
+            </div>
+            
+          </div>
+       </div>
+   </a>
+
+
+
     </div>
   )
 }

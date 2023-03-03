@@ -1,13 +1,21 @@
 import React from 'react'
-import { useEffect } from 'react'
+// import { useEffect } from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function dashBoard() {
+function dashBoard(props) {
 
-  const [selectedButton,setSelectedButton] = useState("dashboard")
+  const navigate = useNavigate()
+  const [selectedButton,setSelectedButton] = useState(props.button)
 
-const navigate = useNavigate()
+  // const buttonHighlight = () =>{
+
+  //   setSelectedButton()
+  // }
+
+  
+
+
   return (
     <div className=''>
         
@@ -63,7 +71,7 @@ const navigate = useNavigate()
           <div id="menu" class="flex flex-col space-y-2">
             <a
                onClick={()=>{
-                setSelectedButton("dashboard")
+                 setSelectedButton("dashboard")
                 navigate('/admin/dashboard')
               }}
               class={`${selectedButton === "dashboard" ? "bg-teal-500 text-base" : "bg-white"} text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:text-base rounded-md transition duration-150 ease-in-out`}
@@ -82,7 +90,7 @@ const navigate = useNavigate()
             </a>
             <a
               onClick={()=>{
-                setSelectedButton("products")
+                // setSelectedButton("products")
                 navigate('/admin/adminProducts')
                }}
               
@@ -102,7 +110,7 @@ const navigate = useNavigate()
             </a>
             <a 
                onClick={()=>{
-                setSelectedButton("customers")
+                // setSelectedButton("customers")
                 navigate('/admin/adminUsers')
                }}
               
@@ -122,7 +130,7 @@ const navigate = useNavigate()
             </a>
             <a
                 onClick={()=>{
-                  setSelectedButton("category")
+                  // setSelectedButton("category")
                   navigate('/admin/addCategory')
                 }}
               class={`${selectedButton === "category" ? "bg-teal-500 text-base" : "bg-white"} text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out`}
@@ -145,7 +153,7 @@ const navigate = useNavigate()
             <a
              
               onClick={()=>{
-                setSelectedButton("addProducts")
+                // setSelectedButton("addProducts")
                 navigate("/admin/addProduct")
               }}
               class={`${selectedButton === "addProducts" ? "bg-teal-500 text-base" : "bg-white"} text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out`}
@@ -165,7 +173,7 @@ const navigate = useNavigate()
             <a
               
               onClick={()=>{
-                setSelectedButton("calender")
+                // setSelectedButton("calender")
                 navigate('/admin/admincalender')
               }}
               class={`${selectedButton === "calender" ? "bg-teal-500 text-base" : "bg-white"} text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out`}
@@ -186,7 +194,7 @@ const navigate = useNavigate()
             </a>
             <a
               onClick={() => {
-                setSelectedButton("allOrders")
+                // setSelectedButton("allOrders")
                 navigate("/admin/allOrders")
               }}
               class={`${selectedButton === "allOrders" ? "bg-teal-500 text-base" : "bg-white"} text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white hover:scale-105 rounded-md transition duration-150 ease-in-out`}

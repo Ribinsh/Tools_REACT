@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../../axios';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast';
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -13,7 +13,7 @@ function userProfile() {
 
     const blockUser  = ()=>{
         axios
-        .get(`http://localhost:3000/admin/blockUser/${userId}`)
+        .get(`/admin/blockUser/${userId}`)
         .then((response) => {
           toast.success("Blocked")
           setBlock("Blocked")

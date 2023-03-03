@@ -8,17 +8,35 @@ function ProdutTable(props) {
     
     const [product, setProduct] = useState([])
     const [tempProduct, setTempProduct] = useState([])
+    const [search, setSearch] = useState("");
+
+    const searchData = (product) => {
+        return search === ""
+          ? product
+          : product.productName.toLowerCase().includes(search) ||
+          product.category.toLowerCase().includes(search) ||
+          product.brandName.toLowerCase().includes(search) 
+            
+      }
+
     
     let category = props.category
   
-    // const filterData =(data)=>{
-    //    let  filtered = data.filter((product) =>{
-    //        product.category == category
-          
-    //    })
-    //    console.log("filter"+ filtered);
-    //    setTempProduct(filtered)
-    // }
+    const filterData =(data)=>{
+        if(data === "all"){
+            setTempProduct(product)
+
+          }else if(data === "Renting"){
+            let products = product.filter((product) => product.rentingStatus === "Renting" )
+            setTempProduct(products)
+          }
+          else{
+
+              let  filtered = product.filter((product) => product.listingStatus === data  )
+              
+              setTempProduct(filtered)
+           }
+          }
 
 
 
@@ -72,10 +90,15 @@ function ProdutTable(props) {
                     </div>
                     <div class="relative">
                         <select
+                         onChange={(e) =>{
+                            let targetValue = e.target.value
+                               filterData(targetValue)
+                          }}
                             class="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
-                            <option>All</option>
-                            <option>Active</option>
-                            <option>Inactive</option>
+                            <option value="all">All</option>
+                            <option value= "List">Listed</option>
+                            <option value="Unlist" >Unlisted</option>
+                            <option value="Renting"> Renting</option>
                         </select>
                         <div
                             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -93,7 +116,12 @@ function ProdutTable(props) {
                             </path>
                         </svg>
                     </span>
-                    <input placeholder="Search"
+                    <input 
+                     onChange={(e) => {
+                        let searchValue = e.target.value.toLocaleLowerCase();
+                        setSearch(searchValue);
+                      }} 
+                      placeholder="Search"
                         class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
                 </div>
             </div>
@@ -130,7 +158,7 @@ function ProdutTable(props) {
                             </tr>
                         </thead>
                         <tbody>
-                           {tempProduct.map((data ,index) =>(
+                           {tempProduct.filter(searchData).map((data ,index) =>(
 
                             <tr>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -179,7 +207,7 @@ function ProdutTable(props) {
                                     </span>
                                     }
 
-                                    {!data.rentingStatus == "Store" && 
+                                    {data.rentingStatus == "Renting" && 
                                      <span
                                      class="relative   inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                                      <span aria-hidden

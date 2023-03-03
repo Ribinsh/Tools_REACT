@@ -6,7 +6,7 @@ import AddCategory from '../../Components/admin/home/AddCategory'
 function AdminAddCategory() {
   return (
     <div className='flex'>
-        <DashBoard/>
+        <DashBoard  button="category"/>
         <div className='w-full'>
             <AdminNav/>
             <AddCategory from="admin"/>

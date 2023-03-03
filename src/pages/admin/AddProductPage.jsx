@@ -8,7 +8,7 @@ function AddProductPage() {
     <div className='flex'>
         
 
-        <DashBoard/>
+        <DashBoard  button="addProducts"/>
         
         <div className='w-full '>
         <AdminNav/>

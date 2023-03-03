@@ -7,7 +7,7 @@ function UserProfilePage() {
   return (
     <div className='flex'>
         
-        <DashBoard/>
+        <DashBoard  button="customers"/>
         
         <div className='w-full '>
         <AdminNav/>

@@ -1,15 +1,15 @@
 import React from 'react'
 import DashBoard from '../../Components/admin/home/DashBoard'
 import AdminNav from'../../Components/admin/home/AdminNav'
-import OrdersTable from '../../Components/admin/home/OrdersTable'
+import OrderManagement from '../../Components/admin/home/OrderManagement'
 
-function AllOrdersPage() {
+function singleOrderPage() {
   return (
     <div className='flex'>
     <DashBoard  button="allOrders"/>
     <div className='w-full'>
         <AdminNav/>
-        <OrdersTable/>
+       <OrderManagement/>
 
     </div>
 
@@ -17,4 +17,4 @@ function AllOrdersPage() {
   )
 }
 
-export default AllOrdersPage
+export default singleOrderPage

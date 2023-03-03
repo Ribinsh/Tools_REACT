@@ -12,7 +12,7 @@ function ProductListPage() {
     <div className='flex'>
         
 
-        <DashBoard/>
+        <DashBoard  button="products"/>
         
         <div className='w-full '>
         <AdminNav/>

@@ -10,6 +10,7 @@ function orders() {
   const [tempBookings,setTempBookings] = useState([])
   console.log(tempBookings);
   const [search, setSearch] = useState("");
+  
   const searchData = (order) => {
     return search === ""
       ? order
@@ -165,7 +166,7 @@ function orders() {
                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                         
                           <Link 
-                            to=""
+                            to="/admin/singleOrder"
                             state={data._id}
                             class="flex items-center">
                             <div class="flex-shrink-0 w-10 h-10">

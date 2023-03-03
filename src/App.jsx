@@ -1,6 +1,8 @@
 
 import { Toaster } from 'react-hot-toast'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import ProtectedRoutes from './ProtectedRoutes'
+import ProtectedRouteAdmin from './ProtectedRouteAdmin'
 import ForgetPassword from './Components/user/auth/ForgetPassword'
 import AddCategotyPage from './pages/admin/AddCategotyPage'
 import AddProductPage from './pages/admin/AddProductPage'
@@ -22,6 +24,9 @@ import ProfilePage from './pages/user/ProfilePage'
 import SignupPage from './pages/user/SignupPage'
 import AdminProductPage from './pages/admin/AdminProductPage'
 import AllOrdersPage from './pages/admin/AllOrdersPage'
+import ErrorPage from './pages/ErrorPage'
+import SingleOrderPage from './pages/admin/SingleOrderPage'
+import ContactPage from './pages/user/ContactPage'
 
 function App() {
   return (
@@ -32,24 +37,28 @@ function App() {
           <Route path='/signup' element={<SignupPage/>}/>
           <Route path='/' element={<HomePage/>}/>
           <Route path='/otp' element={<OtpPage/>}/>
-          <Route path='/userCategory' element={<CategoryPage/>}/>
-          <Route path='/Booking' element= {<BookingPage/>}/>
-          <Route path='/Orders' element= {<OrdersPage/>}/>
-          <Route path='/AllItems' element={<CollectionPage/>}/>
-          <Route path='/profile' element={<ProfilePage/>}/>
-          <Route path='/userProfile' element={<UserProfilePage/>}/>
+          <Route path='*' element={<ErrorPage/>}/>
+          <Route path='/userCategory' element={<ProtectedRoutes> <CategoryPage/></ProtectedRoutes>}/>
+          <Route path='/Booking' element= {<ProtectedRoutes> <BookingPage/></ProtectedRoutes>}/>
+          <Route path='/Orders' element= {<ProtectedRoutes><OrdersPage/></ProtectedRoutes>}/>
+          <Route path='/AllItems' element={<ProtectedRoutes><CollectionPage/></ProtectedRoutes>}/>
+          <Route path='/profile' element={<ProtectedRoutes><ProfilePage/></ProtectedRoutes>}/>
           <Route path='/forgetPassword' element= {<ForgetPassword/>}/>
+          <Route path='/contact' element={<ContactPage/>}/>
 
-          <Route path='/admin/admincalender' element={<CalenderPage/>}/>
-          <Route path= '/admin/adminUsers' element={<AdminUsers/>}/>
-          <Route path='/admin/addProduct' element= {<AddProductPage/>}/>
-          <Route path='/admin/dashboard' element={<AdminDashboard/>}/>
-          <Route path='/admin/addCategory' element={<AdminAddCategory/>}/>
+        
           <Route path='/admin/adminLogin' element={<AdminLoginPage/>}/>
-          <Route path='/admin/newCategory' element={<AddCategotyPage/>}/>
-          <Route path= '/admin/adminProducts' element={<ProductListPage/>}/>
-          <Route path='/admin/adminSingleProduct' element = {<AdminProductPage/>}/>
-          <Route path='/admin/allOrders' element={<AllOrdersPage/>}/>
+          <Route path='/admin/userProfile' element={<ProtectedRouteAdmin><UserProfilePage/></ProtectedRouteAdmin>}/>
+          <Route path='/admin/admincalender' element={<ProtectedRouteAdmin><CalenderPage/></ProtectedRouteAdmin> }/>
+          <Route path= '/admin/adminUsers' element={<ProtectedRouteAdmin><AdminUsers/></ProtectedRouteAdmin>}/>
+          <Route path='/admin/addProduct' element= {<ProtectedRouteAdmin><AddProductPage/></ProtectedRouteAdmin>}/>
+          <Route path='/admin/dashboard' element={<ProtectedRouteAdmin><AdminDashboard/></ProtectedRouteAdmin>}/>
+          <Route path='/admin/addCategory' element={<ProtectedRouteAdmin><AdminAddCategory/></ProtectedRouteAdmin>}/>
+          <Route path='/admin/newCategory' element={<ProtectedRouteAdmin><AddCategotyPage/></ProtectedRouteAdmin>}/>
+          <Route path= '/admin/adminProducts' element={<ProtectedRouteAdmin><ProductListPage/></ProtectedRouteAdmin>}/>
+          <Route path='/admin/adminSingleProduct' element = {<ProtectedRouteAdmin><AdminProductPage/></ProtectedRouteAdmin>}/>
+          <Route path='/admin/allOrders' element={<ProtectedRouteAdmin><AllOrdersPage/></ProtectedRouteAdmin>}/>
+          <Route path='/admin/singleOrder' element={<ProtectedRouteAdmin><SingleOrderPage/></ProtectedRouteAdmin>}/>
         </Routes>
       </Router>
     <Toaster/>

@@ -1,11 +1,14 @@
-import axios from 'axios';
+import axios from '../../../axios';
 // import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function AddProduct() {
-    const navigate = useNavigate()
+    
+    const location = useLocation()
+    const productId = location?.state
+    console.log(productId);
     const cloudAPI ="dk0cl9vtx"
     const [categories, setCategories] = useState([])
 
@@ -20,27 +23,45 @@ function AddProduct() {
     // const [imageValid, setImageValid] = useState(true);
     const [description,setDescription] = useState('')
 
+    const getProduct = () => {
+      axios.get(`/singleView/${productId}`)
+      .then((response) => {
+        let products =response.data.product
+        setName(products.productName)
+      setBrand(products.brandName)
+      setCategory(products.category)
+      setPrice(products.price)
+      setRentPrice(products.rentPrice)
+      setDetails(products.details)
+      setDescription(products.description)
+      setProductStatus(products.productStatus)
+      setImage(products.imageUrl)  
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response) {
+          toast.error(error.response.data.error);
+        } else {
+          toast.error(error.message);
+        }
+      })
+  }
+     
+
    
-    // const handleImageError = () => {
-    //   setImageValid(false);
-    // };
-    // const formik = useFormik({
-    //     initialValues: {
-    //         name: "",
-    //         brand: "",
-    //         category: "",
-    //         price:"",
-    //         rentPrice:"",
-    //         Details: "",
-    //         productStatus:"",
-    //         image
-    //     }
-    // })
+   
+   
 
     
     useEffect(() => {
+
+      if(location?.state){
+
+        getProduct()
+      }
+
         axios
-          .get("http://localhost:3000/admin/getCategories")
+          .get("/admin/getCategories")
           .then((response) => {
             const categories = response.data.categories;
             
@@ -67,7 +88,7 @@ function AddProduct() {
         const imageUrl = res.data.secure_url
     
       console.log(res.data.secure_url);
-      await axios.post("http://localhost:3000/admin/addProduct",{
+      await axios.post("/admin/addProduct",{
         name,
         brand,
         category,
@@ -98,6 +119,50 @@ function AddProduct() {
           
         })
     })
+}
+
+const handleUpdation = async (e) =>{
+  e.preventDefault();
+
+const formData = new FormData();
+formData.append('file', image);
+formData.append('upload_preset', 'product Image');
+await axios.post(`https://api.cloudinary.com/v1_1/${cloudAPI}/image/upload`, formData)
+.then(async(res) => {
+  const imageUrl = res.data.secure_url
+
+console.log(res.data.secure_url);
+await axios.post(`/admin/updateProduct/${productId}`,{
+  name,
+  brand,
+  category,
+  price,
+  rentPrice,
+  details,
+  productStatus,
+  imageUrl,
+  description,
+})
+.then((response)=>{ 
+    console.log("image added");
+    console.log(response);
+    if(response){
+        toast.success("Product Added Successfully")
+        window.location.reload()
+
+    }
+})
+.catch(error=>{
+    console.log(error);
+    if(error.response){
+
+      toast.error(error.response.data.error)
+    }else{
+     toast.error(error.message)
+    }
+    
+  })
+})
 }
 
 
@@ -136,7 +201,7 @@ function AddProduct() {
               placeholder="Name"
               type="text"
               id="name"
-              value={name}
+               value={name}
               onChange={(e)=>{
                   setName(e.target.value)
               }}
@@ -229,9 +294,16 @@ function AddProduct() {
                     <option value="premium">Premium</option>
                     <option value="featured">Featured</option>
             </select>
-          </div>
+          
           <div>
             <label class="" for="name">Image</label>
+            
+            </div>
+            {image && 
+          <div className='w-20 h-20 bg-gray-200 rounded-md' >
+                <img src={image} alt="" />
+          </div>
+            }
             <input
             required
               class="w-full rounded-lg border-gray-200 p-3 text-sm"
@@ -259,12 +331,42 @@ function AddProduct() {
           </div>
 
           <div class="mt-4">
+          {productId ? 
+               <button
+               type="submit"
+                onClick={handleUpdation}
+               class="inline-flex w-full items-center justify-center rounded-lg bg-black px-5 py-3 text-white sm:w-auto"
+             >
+               
+               <span class="font-medium"> Update product </span>
+             
+               
+ 
+               <svg
+                 xmlns="http://www.w3.org/2000/svg"
+                 class="ml-3 h-5 w-5"
+                 fill="none"
+                 viewBox="0 0 24 24"
+                 stroke="currentColor"
+               >
+                 <path
+                   stroke-linecap="round"
+                   stroke-linejoin="round"
+                   stroke-width="2"
+                   d="M14 5l7 7m0 0l-7 7m7-7H3"
+                 />
+               </svg>
+             </button>
+              :
             <button
               type="submit"
                onClick={handleUpload}
               class="inline-flex w-full items-center justify-center rounded-lg bg-black px-5 py-3 text-white sm:w-auto"
             >
+              
               <span class="font-medium"> Add product </span>
+            
+              
 
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -281,6 +383,7 @@ function AddProduct() {
                 />
               </svg>
             </button>
+              }
           </div>
         </form>
       </div>

@@ -3,10 +3,15 @@ import { useNavigate } from 'react-router-dom'
 
 function adminNav() {
     const navigate = useNavigate()
+
+    const adminLogout = () => {
+      localStorage.clear();
+      navigate("/admin/adminLogin")
+    }
   return (
     <div>
         
-        <header aria-label="Site Header" class="bg-white">
+        <header aria-label="Site Header" class="bg-gray-200">
   <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
     <div class="flex h-16 items-center justify-between">
       <div class="md:flex md:items-center ">
@@ -60,7 +65,8 @@ function adminNav() {
       <div class="flex items-center gap-4">
         <div class="sm:flex sm:gap-4">
          <a onClick={()=>{
-            navigate("/admin/adminLogin")
+          adminLogout()
+            
          }} 
             class="rounded-md bg-teal-600 px-5 cursor-pointer py-2.5 text-sm font-medium text-white shadow"
             

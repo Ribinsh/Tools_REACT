@@ -1,7 +1,7 @@
-import axios from 'axios'
+import axios from '../../../axios'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import AdminCalender from '../../Calender/AdminCalender'
 // import BookingCalender from '../../Calender/BookingCalender'
 
@@ -14,7 +14,7 @@ function AdminSingleProduct() {
     
 
     const listProduct = () =>{
-        axios.get(`http://localhost:3000/admin/listProduct/${productId}`)
+        axios.get(`/admin/listProduct/${productId}`)
         .then((response) => {
          toast.success("Product Updated")
           setUpdate("listed")
@@ -30,7 +30,7 @@ function AdminSingleProduct() {
     }
 
     const unListProduct = () =>{
-        axios.get(`http://localhost:3000/admin/unlistProduct/${productId}`)
+        axios.get(`/admin/unlistProduct/${productId}`)
         .then((response) => {
             toast.success("Product Updated") 
             setUpdate("unlisted")
@@ -46,7 +46,7 @@ function AdminSingleProduct() {
     }
 
     const getProduct = () => {
-        axios.get(`http://localhost:3000/singleView/${productId}`)
+        axios.get(`/singleView/${productId}`)
         .then((response) => {
           setProduct(response.data.product) 
           
@@ -74,7 +74,7 @@ function AdminSingleProduct() {
               {product.productName}
             </h1>
 
-            <p class="mt-1 text-lg font-semibold text-blue-500 text-gray-500">{product.brandName}</p>
+            <p class="mt-1 text-lg font-semibold  text-gray-500">{product.brandName}</p>
           </div>
 
           <div class="grid gap-8 lg:grid-cols-5 lg:items-start">
@@ -119,12 +119,17 @@ function AdminSingleProduct() {
 
                 <div className=" mt-4 w-96 px-5">
                   <p class="text-xl text-center font-bold">Rs.{product.rentPrice}/DAY</p>
-                  <button 
+                  <Link 
+                  to= "/admin/addProduct"
+                  state={productId} >
+                  <button
+                  
                   type="button"
                   class="w-36 mt-3 rounded bg-gradient-to-r from-indigo-400 to-cyan-400 px-8  py-3 text-sm font-bold uppercase tracking-wide text-white"
                 >
                  Edit
                 </button>
+                  </Link>
                {product.listingStatus === "Unlist" && 
                 <button onClick={listProduct}
                   type="button"

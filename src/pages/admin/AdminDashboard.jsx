@@ -7,7 +7,7 @@ import Graph from '../../Components/admin/home/Graph'
 function AdminDashboard() {
   return (
     <div className='flex'>
-        <Dashboard/>
+        <Dashboard  button="dashboard"/>
         <div className=' w-full'>
         <AdminNav/>
         <Reports/>

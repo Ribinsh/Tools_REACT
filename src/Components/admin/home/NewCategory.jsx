@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../../../axios'
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { toast } from 'react-hot-toast'
@@ -8,9 +8,9 @@ import { useNavigate } from 'react-router-dom'
 function NewCategory() {
     const navigate = useNavigate()
     const cloudAPI ="dk0cl9vtx"
-
+   
     const [allCategories,setAllCategories] = useState([])
-    const [categoryName,setCategiryName] = useState("")
+    const [categoryName,setCategoryName] = useState("")
     const [description, setDescription] = useState("")
     const [image, setImage] = useState('')
     const [works, setWorks] = useState([])
@@ -30,12 +30,13 @@ function NewCategory() {
 
     useEffect(() => {
       axios
-        .get("http://localhost:3000/admin/getCategories")
+        .get("/admin/getCategories")
         .then((response) => {
           console.log(response);
           const categories = response.data.categories;
-          const names= categories.filter((data)=> data.categoryName )
-          console.log("jgjgjgj" +names);
+          console.log(categories);
+           const mine = categories.forEach((data)=>{ return data.categoryName} )
+           console.log(mine);
           setAllCategories(categories);
           
         })
@@ -65,8 +66,11 @@ function NewCategory() {
     const handleUpload = async (e) =>{
         e.preventDefault();
         console.log(allCategories);
-        if (allCategories.includes(categoryName)) {
-          toast.error("Category Already exist")
+       
+        let isSame = allCategories.filter((data) => data.categoryName === categoryName)
+          console.log(isSame);
+        if(isSame != null){
+          toast.error("Category alresdy exist")
           return
         }
 
@@ -132,12 +136,9 @@ function NewCategory() {
               type="text"
               value={categoryName}
               onChange={(e)=>{
-                if (allCategories.includes(e.target.value)) {
-                  toast.warning("Category Already exist")
-                  
-                }
+               
         
-                setCategiryName(e.target.value)
+                setCategoryName(e.target.value)
               }}
           
               id="name"

@@ -6,7 +6,7 @@ import AdminSingleProduct from '../../Components/admin/home/AdminSingleProduct'
 function adminProductPage() {
   return (
     <div className='flex'>
-    <DashBoard/>
+    <DashBoard  button="products"/>
     <div className='w-full'>
         <AdminNav/>
         <AdminSingleProduct/>

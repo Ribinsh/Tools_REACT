@@ -6,7 +6,7 @@ import UsersList from '../../Components/admin/home/UsersList'
 function AdminUsers() {
   return (
     <div className='flex'>
-        <DashBoard/>
+        <DashBoard  button="customers"/>
         <div className='w-full'>
             <AdminNav/>
             <UsersList/>

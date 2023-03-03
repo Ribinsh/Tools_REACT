@@ -5,12 +5,32 @@ import { Link } from 'react-router-dom';
 function UsersList() {
    
     const [users,setUsers] = useState([])
-  console.log(users);
+    const [tempUsers, setTEmpUsers] = useState([])
+    const [search, setSearch] = useState("");
+  
+    const searchData = (user) => {
+        return search === ""
+          ? user
+          : user.name.toLowerCase().includes(search) ||
+          user.profession.toLowerCase().includes(search) 
+            
+      }
+
+      const filterUser = (value) => {
+        if(value === "all"){
+            setTEmpUsers(users)
+            return
+        }
+        let filteredUser = users.filter((user) => user.status === value)
+        setTEmpUsers(filteredUser)
+      }
+
     useEffect(() => {
         axios.get("http://localhost:3000/admin/getUsersList")
         .then((response) => {
           const allUsers = response.data.allUsers;
                     setUsers(allUsers);
+                    setTEmpUsers(allUsers)
         })
         .catch((error) => {
           console.log(error);
@@ -48,10 +68,14 @@ function UsersList() {
                     </div>
                     <div class="relative">
                         <select
+                         onChange={(e) =>{
+                            let targetValue = e.target.value
+                               filterUser(targetValue)
+                          }} 
                             class="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
-                            <option>All</option>
-                            <option>Active</option>
-                            <option>Inactive</option>
+                            <option value= "all">All</option>
+                            <option value="Unblocked">Active</option>
+                            <option value= "Blocked">Inactive</option>
                         </select>
                         <div
                             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -69,7 +93,11 @@ function UsersList() {
                             </path>
                         </svg>
                     </span>
-                    <input placeholder="Search"
+                    <input
+                     onChange={(e) => {
+                        let searchValue = e.target.value.toLocaleLowerCase();
+                        setSearch(searchValue);
+                      }}  placeholder="Search"
                         class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
                 </div>
             </div>
@@ -102,7 +130,7 @@ function UsersList() {
                             </tr>
                         </thead>
                         <tbody>
-                           { users.map((data , index) =>(
+                           { tempUsers.filter(searchData).map((data , index) =>(
 
                             <tr>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -114,7 +142,7 @@ function UsersList() {
                                                 alt="" />
                                         </div>
                                        
-                                        <Link to="/userProfile" state={data._id} class="ml-3">
+                                        <Link to="/admin/userProfile" state={data._id} class="ml-3">
                                         <span
                                         class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                                         <span aria-hidden

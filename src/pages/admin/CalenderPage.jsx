@@ -6,7 +6,7 @@ import AdminNav from'../../Components/admin/home/AdminNav'
 function CalenderPage() {
   return (
     <div className='flex'>
-        <DashBoard/>
+        <DashBoard  button="calender"/>
         <div className='w-full'>
             <AdminNav/>
             <Calender/>

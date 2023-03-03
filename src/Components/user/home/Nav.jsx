@@ -13,7 +13,7 @@ function Nav() {
 
   const navigate = useNavigate()
   return (
-    <div>
+    <div className='sticky top-0 z-30'>
         
         <header aria-label="Site Header" class="bg-white">
   <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
@@ -49,8 +49,10 @@ function Nav() {
           <ul class="flex items-center gap-6 text-sm">
             <li>
               <a
-                class="text-gray-500 transition hover:text-gray-500/75"
-                href=""
+                class="text-gray-500 transition cursor-pointer hover:text-gray-500/75"
+                onClick={()=>{
+                  navigate("/contact")
+                }}
               >
                 About
               </a>

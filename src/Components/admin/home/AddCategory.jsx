@@ -1,7 +1,9 @@
 import { data } from "autoprefixer";
-import axios from "axios";
+import axios from "../../../axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+
 
 function AddCategory(props) {
   const [category, setCategory] = useState([]);
@@ -17,7 +19,7 @@ function AddCategory(props) {
   
   useEffect(() => {
     axios
-      .get("http://localhost:3000/admin/getCategories")
+      .get("/admin/getCategories")
       .then((response) => {
         const categories = response.data.categories;
         

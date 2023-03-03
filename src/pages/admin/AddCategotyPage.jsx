@@ -9,7 +9,7 @@ function AddCategotyPage() {
          <div className='flex'>
         
 
-        <DashBoard/>
+        <DashBoard button="category"/>
         
         <div className='w-full '>
         <AdminNav/>
