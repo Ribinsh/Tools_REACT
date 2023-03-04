@@ -9,7 +9,7 @@ function adminNav() {
       navigate("/admin/adminLogin")
     }
   return (
-    <div>
+    <div className='sticky top-0 z-50'>
         
         <header aria-label="Site Header" class="bg-gray-200">
   <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">

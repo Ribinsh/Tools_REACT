@@ -4,12 +4,28 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
+import ReactPaginate from 'react-paginate'
+import "../../../pagination.css"
+
+
 function orders() {
+
+  
 
   const [bookings,setBookings] = useState([])
   const [tempBookings,setTempBookings] = useState([])
   console.log(tempBookings);
   const [search, setSearch] = useState("");
+
+  const [currentPage, setCurrentPage] = useState(0);
+const [itemsPerPage, setItemsPerPage] = useState(10);
+
+const dataToRender = tempBookings.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+
+const handlePageChange = ({ selected }) => {
+  setCurrentPage(selected);
+};
+
   
   const searchData = (order) => {
     return search === ""
@@ -72,7 +88,10 @@ function orders() {
             <div class="my-2 flex sm:flex-row flex-col">
               <div class="flex flex-row mb-1 sm:mb-0">
                 <div class="relative">
-                  <select class="appearance-none h-full rounded-l border block  w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                  <select 
+                   onChange={(e) =>{
+                    setItemsPerPage(e.target.value)
+                  }} class="appearance-none h-full rounded-l border block  w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                     <option>5</option>
                     <option>10</option>
                     <option>20</option>
@@ -157,7 +176,7 @@ function orders() {
                     </tr>
                   </thead>
                   <tbody>
-                    {tempBookings.filter(searchData).map((data, index) => (
+                    {dataToRender.filter(searchData).map((data, index) => (
 
                         
               
@@ -268,19 +287,20 @@ function orders() {
                     ))}
                   </tbody>
                 </table>
-                <div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
-                  <span class="text-xs xs:text-sm text-gray-900">
-                    Showing 1 to 4 of 50 Entries
-                  </span>
-                  <div class="inline-flex mt-2 xs:mt-0">
-                    <button class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
-                      Prev
-                    </button>
-                    <button class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
-                      Next
-                    </button>
-                  </div>
-                </div>
+                <ReactPaginate
+                         pageCount={Math.ceil(tempBookings.length / itemsPerPage)}
+                            marginPagesDisplayed={2}
+                             pageRangeDisplayed={5}
+                             onPageChange={handlePageChange}
+                           containerClassName="pagination"
+                             activeClassName="active"
+                             previousLabel="Previous"
+                              nextLabel="Next"
+                              pageLinkClassName="page-link"
+                              previousLinkClassName="page-link"
+                              nextLinkClassName="page-link"
+                              disabledClassName="disabled"
+                        />
               </div>
             </div>
           </div>

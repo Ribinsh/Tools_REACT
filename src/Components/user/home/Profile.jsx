@@ -2,11 +2,17 @@ import React from 'react'
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import axios from '../../../axios'
 
 function Profile() {
-
+     const navigate = useNavigate()
     const [user, setUser] = useState('')
+
+    const [visible,setVisible] = useState(false)
+    const [ address, setAddress] = useState('')
+    const [image,setImage] = useState('')
+    const [gender,setGender] = useState('')
 
     const options = { year:"numeric", month: "long", day: "numeric" };
   const formattedDate = (date) => {
@@ -43,145 +49,11 @@ function Profile() {
     <div className='bg-emerald-100'>
         
     
-    {/* <div>
-         <div class="h-full bg-gray-200 p-8">
-      <div class="bg-white rounded-lg shadow-xl pb-8">
-        <div
-          x-data="{ openSettings: false }"
-          class="absolute right-12 mt-4 rounded"
-        >
-          <button
-            class="border border-gray-400 p-2 rounded text-gray-300 hover:text-gray-300 bg-gray-100 bg-opacity-10 hover:bg-opacity-20"
-            title="Settings"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-4 w-4"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="3"
-                d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-              ></path>
-            </svg>
-          </button>
-         
-        </div>
-        <div class="w-full h-[250px] bg-fixed bg-cover  bg-[url(https://res.cloudinary.com/dk0cl9vtx/image/upload/v1676526848/Products/p7f0xmuefhdpjfqniomn.png)] bg-center">
-          
-        </div>
-        <div class="flex flex-col items-center -mt-20">
-          <img
-            src="https://us.123rf.com/450wm/lacheev/lacheev2109/lacheev210900016/lacheev210900016.jpg?ver=6"
-            class="w-40 border-4 border-white rounded-full"
-          />
-          <div class="flex items-center space-x-2 mt-2">
-            <p class="text-2xl">{user.name}</p>
-            <span class="bg-blue-500 rounded-full p-1" title="Verified">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="text-gray-100 h-2.5 w-2.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="4"
-                  d="M5 13l4 4L19 7"
-                ></path>
-              </svg>
-            </span>
-          </div>
-          <p class="text-gray-700">Engineer</p>
-          <p class="text-sm text-gray-500">Kerala</p>
-        </div>
-        <div class="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
-          <div class="flex items-center space-x-4 mt-2">
-           
-
-          </div>
-        </div>
-
-        <div class="my-4 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
-          <div class="w-full flex flex-col 2xl:w-1/3">
-            <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
-              <h4 class="text-xl text-gray-900 font-bold">
-                 Personal Info
-              </h4>
-              <ul class="mt-2 text-gray-700">
-                <li class="flex border-y py-2">
-                  <span class="font-bold w-24">Full name:</span>
-                  <span class="text-gray-700">{user.name}</span>
-                </li>
-                <li class="flex border-y py-2">
-                  <span class="font-bold w-24"> Rentings:</span>
-                  <span class="text-green-600 font-bold ">{user.rentings}</span>
-                </li>
-               
-                <li class="flex border-b py-2">
-                  <span class="font-bold w-24">Joined:</span>
-                  <span class="text-gray-700">{user.joined}</span>
-                </li>
-                <li class="flex border-b py-2">
-                  <span class="font-bold w-24">Mobile:</span>
-                  <span class="text-gray-700">{user.phone}</span>
-                </li>
-                <li class="flex border-b py-2">
-                  <span class="font-bold w-24">Email:</span>
-                  <span class="text-gray-700">{user.email}</span>
-                </li>
-                <li class="flex border-b py-2">
-                  <span class="font-bold w-24">Location:</span>
-                  <span class="text-gray-700">Kerala</span>
-                </li>
-                <li class="flex border-b py-2">
-                  <span class="font-bold w-24">Gender:</span>
-                  <span class="text-gray-700">{user.gender}</span>
-                </li>
-             
-                <li class="flex items-center border-b py-2 space-x-2">
-                  <span class="font-bold w-24">Address:</span>
-                  <span class="text-gray-700">{user.address}</span>
-                 
-                </li>
-              </ul>
-            </div>
-            
-          </div>
-          <div class="flex flex-col w-full 2xl:w-2/3">
-            <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
-              <h4 class="text-xl text-gray-900 font-bold">About</h4>
-              <p class="mt-2 text-gray-700">
-                Contrary to popular belief, Lorem Ipsum is not simply random
-                text. It has roots in a piece of classical Latin literature from
-                45 BC, making it over 2000 year Richard McClintock, a Latin
-                professor at Hampden-Sydney College in Virginia, looked up one
-                of the more obscure Latin words, consecteturLorem ipsum dolor
-                sit amet consectetur adipisicing elit. Nesciunt voluptates
-                obcaecati numquam error et ut fugiat asperiores. Sunt nulla ad
-                incidunt laboriosam, laudantium est unde natus cum numquam,
-                neque facere. Lorem ipsum dolor sit amet consectetur adipisicing
-                elit. Ut, magni odio magnam commodi sunt ipsum eum! Voluptas
-                eveniet aperiam at maxime, iste id dicta autem odio laudantium
-                eligendi commodi distinctio!
-              </p>
-            </div>
-            
-          </div>
-        </div>
-      </div>
-    </div>
-    </div> */}
+   
 
 
 <a
-  href="#"
+  
   class="relative block overflow-hidden rounded-lg border border-gray-100 px-20 sm:p-6 lg:p-20"
 >
   <span
@@ -229,7 +101,7 @@ function Profile() {
 
    
   </dl>
-<div class="my-4 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
+<div class="my-4 flex ">
           <div class="w-1/2 flex flex-col 2xl:w-1/3">
             <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
               <h4 class="text-xl text-gray-900 font-bold">
@@ -263,19 +135,142 @@ function Profile() {
                 </li>
                 <li class="flex border-b py-2">
                   <span class="font-bold w-24">Gender:</span>
-                  <span class="text-gray-700">{user.gender}</span>
+                  {user.gender ==="Not added" ? 
+                  <button
+                  onClick={() =>{
+                    setVisible(true)
+                  }}
+                   class="text-gray-700 bg-green-400 p-2"> Add</button>
+                  : <span class="text-gray-700"> Added</span>
+                  }
                 </li>
              
                 <li class="flex items-center border-b py-2 space-x-2">
                   <span class="font-bold w-24">Address:</span>
-                  <span class="text-gray-700">{user.address}</span>
+                  {user.address ==="Not added" ? 
+                  <button 
+                  onClick={() =>{
+                    setVisible(true)
+                  }
+
+                  } class="text-gray-700 bg-green-400 p-2"> Add</button>
+                  : <span class="text-gray-700"> Added</span>
+                  }
                  
                 </li>
               </ul>
             </div>
             
           </div>
+
+       <div className='ml-8 w-1/2'>
+       <section className={`  p-6 mx-auto bg-indigo-600 ${visible ? "visible" :"invisible"}  rounded-md shadow-xl dark:bg-gray-800 mt-20`}>
+          <h1 className="text-xl font-bold text-white capitalize dark:text-white">
+            Profile settings
+          </h1>
+          <div className="flex justify-end">
+            <button
+              onClick={() => {
+                navigate("");
+              }}
+              className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-green-500 rounded-md hover:bg- focus:outline-none focus:bg-gray-600"
+            >
+              Back
+            </button>
+          </div>
+          <form onSubmit={{}}>
+            <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+              <div>
+                <label className="block text-sm font-medium text-white">
+                  Profile
+                </label>
+                <div className=" flex justify-center px-3  pb-4 border-2 border-gray-300 border-dashed rounded-md">
+                  <div className="space-y-1 text-center">
+                    <div className="flex justify-center">
+                      <img
+                        class="w-20 border-4 border-white rounded-full"
+                        // src={profileUrl}
+                        alt="notget"
+                      />
+                    </div>
+                    <div className="flex text-sm text-gray-600">
+                      <label
+                        for="file-upload"
+                        className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                      >
+                        <span className="">Upload a your photo</span>
+                        <input
+                          onChange={(e) => {
+                            setImage(e.target.files[0]);
+                          }}
+                          id="file-upload"
+                          name="file-upload"
+                          type="file"
+                          className="sr-only"
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label
+                  className="text-white dark:text-gray-200"
+                  for="passwordConfirmation"
+                >
+                  Gender
+                </label>
+                <select
+                  className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                //   value={position}
+                  onChange={(e) => {
+                    setGender(e.target.value);
+                  }}
+                >
+                  
+                  <option>Male</option>
+                  <option>Female</option>
+                  <option>General</option>
+                 
+                </select>
+              </div>
+
+              
+             
+              <div>
+                <label
+                  className="text-white dark:text-gray-200"
+                  for="passwordConfirmation"
+                >
+                  ADDRESS
+                </label>
+                <textarea
+                //   value={address}
+                  onChange={(e) => {
+                    setAddress(e.target.value);
+                  }}
+                  id="textarea"
+                  type="textarea"
+                  className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                ></textarea>
+              </div>
+             
+            </div>
+
+            <div className="flex justify-end mt-6">
+              <button
+                type="submit"
+                className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-pink-500 rounded-md hover:bg-pink-700 focus:outline-none focus:bg-gray-600"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        </section>
+
        </div>
+       </div>
+
    </a>
 
 

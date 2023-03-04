@@ -20,7 +20,7 @@ function AddProduct() {
     const[details,setDetails] = useState('')
     const[productStatus,setProductStatus] = useState('')
     const[image,setImage] = useState('')
-    // const [imageValid, setImageValid] = useState(true);
+    const [add, setAdd] = useState(false);
     const [description,setDescription] = useState('')
 
     const getProduct = () => {
@@ -75,18 +75,18 @@ function AddProduct() {
               toast.error(error.message);
             }
           });
-      }, []);
+      }, [add]);
 
       const handleUpload = async (e) =>{
         e.preventDefault();
-
+          toast.loading("Adding new product")
     const formData = new FormData();
     formData.append('file', image);
     formData.append('upload_preset', 'product Image');
     await axios.post(`https://api.cloudinary.com/v1_1/${cloudAPI}/image/upload`, formData)
     .then(async(res) => {
         const imageUrl = res.data.secure_url
-    
+        toast.dismiss()
       console.log(res.data.secure_url);
       await axios.post("/admin/addProduct",{
         name,
@@ -104,7 +104,7 @@ function AddProduct() {
           console.log(response);
           if(response){
               toast.success("Product Added Successfully")
-              window.location.reload()
+              setAdd(true)
   
           }
       })
@@ -123,14 +123,14 @@ function AddProduct() {
 
 const handleUpdation = async (e) =>{
   e.preventDefault();
-
+  toast.loading("product Updating")
 const formData = new FormData();
 formData.append('file', image);
 formData.append('upload_preset', 'product Image');
 await axios.post(`https://api.cloudinary.com/v1_1/${cloudAPI}/image/upload`, formData)
 .then(async(res) => {
   const imageUrl = res.data.secure_url
-
+  toast.dismiss()
 console.log(res.data.secure_url);
 await axios.post(`/admin/updateProduct/${productId}`,{
   name,
@@ -147,8 +147,8 @@ await axios.post(`/admin/updateProduct/${productId}`,{
     console.log("image added");
     console.log(response);
     if(response){
-        toast.success("Product Added Successfully")
-        window.location.reload()
+        toast.success("Product Updated  Successfully")
+        history.back()
 
     }
 })

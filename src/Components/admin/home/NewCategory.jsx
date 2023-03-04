@@ -2,14 +2,17 @@ import axios from '../../../axios'
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { toast } from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 // import { FileExtension } from 'file-type'
 
 function NewCategory() {
     const navigate = useNavigate()
     const cloudAPI ="dk0cl9vtx"
+
+    const location = useLocation()
+    const categoryId = location?.state
    
-    const [allCategories,setAllCategories] = useState([])
+    const [allCategories,setAllCategories] = useState('')
     const [categoryName,setCategoryName] = useState("")
     const [description, setDescription] = useState("")
     const [image, setImage] = useState('')
@@ -17,7 +20,7 @@ function NewCategory() {
     // const [imageUrl,setImageUrl] = useState("")
     
     const   handleCheckboxChange =(e) =>{
-        
+       
         const item = e.target.value;
         if (e.target.checked) {
           setWorks([...works, item]);
@@ -26,17 +29,38 @@ function NewCategory() {
         }
         console.log(works);
     }
+
+   const  getCategory = () => {
+    axios.get(`/admin/getSingleCategory/${categoryId}`).then((response) => {
+      let result = response.data.cat
+      setCategoryName(result.categoryName)
+      setImage(result.imageUrl)
+      setDescription(result.description)
+      setWorks(result.work)
+    }) .catch((error) => {
+      console.log(error);
+      if (error.response) {
+        toast.error(error.response.data.error);
+      } else {
+        toast.error(error.message);
+      }
+    })
+   }
   
 
     useEffect(() => {
+
+      if(location?.state){
+
+        getCategory()
+      }
       axios
-        .get("/admin/getCategories")
+        .get("/admin/getCategoryNames")
         .then((response) => {
           console.log(response);
-          const categories = response.data.categories;
+          const categories = response.data.categoryNames;
           console.log(categories);
-           const mine = categories.forEach((data)=>{ return data.categoryName} )
-           console.log(mine);
+       
           setAllCategories(categories);
           
         })
@@ -66,11 +90,11 @@ function NewCategory() {
     const handleUpload = async (e) =>{
         e.preventDefault();
         console.log(allCategories);
-       
-        let isSame = allCategories.filter((data) => data.categoryName === categoryName)
+        toast.loading("category Adding")
+        let isSame = allCategories.includes(categoryName)
           console.log(isSame);
-        if(isSame != null){
-          toast.error("Category alresdy exist")
+        if(isSame ){
+          toast.error("Category already exist")
           return
         }
 
@@ -81,9 +105,9 @@ function NewCategory() {
     await axios.post(`https://api.cloudinary.com/v1_1/${cloudAPI}/image/upload`, formData)
     .then(async(res) => {
        const imageUrl = res.data.secure_url
-    //    setImageUrl(res.data.secure_url);
+       toast.dismiss()
       console.log(res.data.secure_url);
-      await axios.post("http://localhost:3000/admin/addCategory",{
+      await axios.post("/admin/addCategory",{
         categoryName,
         description,
         works,
@@ -113,6 +137,49 @@ function NewCategory() {
    
     }
 
+    const handleUpdation = async (e) =>{
+      e.preventDefault();
+
+      toast.loading("category Updating")
+      
+  const formData = new FormData();
+  formData.append('file', image);
+  formData.append('upload_preset', 'Tooolshope');
+  await axios.post(`https://api.cloudinary.com/v1_1/${cloudAPI}/image/upload`, formData)
+  .then(async(res) => {
+     const imageUrl = res.data.secure_url
+     toast.dismiss()
+    console.log(res.data.secure_url);
+    await axios.post(`/admin/updateCategory/${categoryId}`,{
+      categoryName,
+      description,
+      works,
+      imageUrl,
+    })
+    .then((response)=>{ 
+        console.log("image added");
+        console.log(response);
+        if(response){
+            toast.success("Category updated Successfully")
+            navigate("/admin/addCategory")
+
+        }
+    })
+    .catch(error=>{
+        console.log(error);
+        if(error.response){
+
+          toast.error(error.response.data.error)
+        }else{
+         toast.error(error.message)
+        }
+        
+      })
+  })
+    
+ 
+  }
+
 
 
 
@@ -121,10 +188,15 @@ function NewCategory() {
       
 
       <div class="rounded-lg bg-green-100 py-3 px-8 shadow-lg lg:col-span-3 lg:p-12">
-      
-      <h1 className="flex` md:px-10 px-5 md:mx-20 mx-5 font-bold text-2xl text-gray-800">
+      {categoryId ? 
+      <h1 className="flex` text-center md:px-10 px-5 md:mx-20 mx-5 font-bold text-2xl text-gray-800">
+           Edit Category !
+        </h1>
+       :
+      <h1 className="flex` text-center md:px-10 px-5 md:mx-20 mx-5 font-bold text-2xl text-gray-800">
           Add new  Category !
         </h1>
+      }
 
         <form action={handleUpload} class="space-y-4">
           <div>
@@ -256,12 +328,15 @@ function NewCategory() {
 
           
           <div class="mt-4">
+
+            {categoryId ?
+            
             <button
               type="submit"
-              onClick={handleUpload}
+              onClick={handleUpdation}
               class="inline-flex w-full items-center justify-center rounded-lg bg-black px-5 py-3 text-white sm:w-auto"
             >
-              <span class="font-medium"> Add Category </span>
+              <span class="font-medium"> Update Category </span>
 
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -278,6 +353,30 @@ function NewCategory() {
                 />
               </svg>
             </button>
+            :
+            <button
+            type="submit"
+            onClick={handleUpload}
+            class="inline-flex w-full items-center justify-center rounded-lg bg-black px-5 py-3 text-white sm:w-auto"
+          >
+            <span class="font-medium"> Add Category </span>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="ml-3 h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M14 5l7 7m0 0l-7 7m7-7H3"
+              />
+            </svg>
+          </button>
+          }
           </div>
         </form>
       </div>

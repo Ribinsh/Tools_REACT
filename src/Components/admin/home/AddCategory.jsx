@@ -75,8 +75,20 @@ function AddCategory(props) {
                     </a>
                   </h3>
                  
+                <div className="absolute right-0 bottom-0 p-2">
+                  {/* <button className=" bg-orange-300  rounded-sm text-lg text-black px-2 p-1">
+                       Delete
+                  </button> */}
+                  <Link
+                   to= "/admin/newCategory"
+                   state={data._id} 
+                  >
+                  <button className=" bg-sky-300 rounded-sm text-lg text-black px-2 p-1 ml-2 hover:bg-emerald-400">
+                       Edit
+                  </button>
+                  </Link>
                 </div>
-                
+                </div>
               </article>
              </Link>
             ))
