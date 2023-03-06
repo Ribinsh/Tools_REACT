@@ -1,12 +1,16 @@
 import React from 'react'
 import SalesReport from './SalesReport'
-// import { PDFDownloadLink } from "react-html2pdf";
+
+
+// import { Page, Text,Image, Document,StyleSheet } from '@react-pdf/renderer'
 import { PDFDownloadLink } from '@react-pdf/renderer'
 
 
 function DownloadButton() {
   return (
     <div className='flex justify-center mb-20 cursor-pointer'>
+
+      
    
    <PDFDownloadLink document={<SalesReport />} fileName="report.pdf">
   {({ blob, url, loading, error }) =>

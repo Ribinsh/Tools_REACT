@@ -1,4 +1,5 @@
 import React from 'react'
+import { Document ,Pge , Text ,StyleSheet } from '@react-pdf/renderer'
 
 
 
