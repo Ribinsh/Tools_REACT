@@ -7,7 +7,7 @@ function Banner() {
   return (
     <div>
         <section
-  class="overflow-hidden bg-[url(https://www.teahub.io/photos/full/175-1757789_building-materials-and-tools.jpg)] bg-cover bg-center bg-no-repeat"
+  class="overflow-hidden bg-fixed bg-[url(https://www.teahub.io/photos/full/175-1757789_building-materials-and-tools.jpg)] bg-cover bg-center bg-no-repeat"
 >
   <div class="bg-black/25 p-8 md:p-12 lg:px-16 lg:py-24">
     <div class="max-w-lg text-center sm:text-left">

@@ -6,7 +6,7 @@ import OrderManagement from '../../Components/admin/home/OrderManagement'
 function singleOrderPage() {
   return (
     <div className='flex'>
-    <DashBoard  button="allOrders"/>
+    <DashBoard  button="allOrder"/>
     <div className='w-full'>
         <AdminNav/>
        <OrderManagement/>

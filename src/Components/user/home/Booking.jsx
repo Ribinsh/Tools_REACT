@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios from "../../../axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
-// import Calendar from 'react-calendar'
+
 import BookingCalender from "../../Calender/BookingCalender";
 
 function Booking() {
@@ -12,15 +12,15 @@ function Booking() {
   const [product, setProduct] = useState("");
   const [totalDays, setTotalDays] = useState("");
   const [allDates, setAllDates] = useState("");
- 
+
   const placeBooking = () => {
-    if( totalDays === 0){
-       toast.error("please select date")
-       return
+    if (totalDays === 0) {
+      toast.error("please select date");
+      return;
     }
     axios
       .post(
-        "http://localhost:3000/bookProduct",
+        "/bookProduct",
         {
           productId: product._id,
           totalPrice: product.rentPrice * totalDays,
@@ -48,7 +48,7 @@ function Booking() {
 
   const getProduct = async () => {
     await axios
-      .get(`http://localhost:3000/singleView/${productId}`)
+      .get(`/singleView/${productId}`)
       .then((response) => {
         console.log(response);
         setProduct(response.data.product);
@@ -63,10 +63,8 @@ function Booking() {
       });
   };
 
-  
   useEffect(() => {
-    getProduct()
-    
+    getProduct();
   }, []);
   return (
     <div>
@@ -113,7 +111,11 @@ function Booking() {
             <div class="lg:sticky lg:top-0">
               <div class=" w-96 ">
                 <div class=" font-black bg-white ">
-                  <BookingCalender updateData={setTotalDays}  updateDates ={setAllDates} productId={productId} />
+                  <BookingCalender
+                    updateData={setTotalDays}
+                    updateDates={setAllDates}
+                    productId={productId}
+                  />
                 </div>
               </div>
 
@@ -123,13 +125,12 @@ function Booking() {
               <div className="w-96 flex justify-center mt-5 align-middle px-5">
                 <p className="text-xl font-bold">Total amount :</p>
                 <p class="text-green-500 text-xl font-bold">
-                  
                   RS.{product.rentPrice * totalDays}
                 </p>
               </div>
               <div className="w-96 flex justify-center mt-5 align-middle px-5">
                 <button
-                id="bookButton"
+                  id="bookButton"
                   onClick={placeBooking}
                   class="w-full rounded bg-green-600 px-8  py-3 text-sm font-bold uppercase tracking-wide text-white"
                 >

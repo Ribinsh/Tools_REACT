@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../../axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 
@@ -26,7 +26,7 @@ function UsersList() {
       }
 
     useEffect(() => {
-        axios.get("http://localhost:3000/admin/getUsersList")
+        axios.get("/admin/getUsersList")
         .then((response) => {
           const allUsers = response.data.allUsers;
                     setUsers(allUsers);

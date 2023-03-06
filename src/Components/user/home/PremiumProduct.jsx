@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link,useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
-import axios from 'axios'
+import axios from '../../../axios'
 
 function PremiumProduct() {
     const navigate = useNavigate()
@@ -11,7 +11,7 @@ function PremiumProduct() {
     
     useEffect(()=>{
         axios
-        .get("http://localhost:3000/premiumProduct")
+        .get("/premiumProduct")
         .then((response) => {
           const data = response.data.product
           

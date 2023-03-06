@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../../../axios'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import { Link } from 'react-router-dom'
@@ -52,7 +52,7 @@ function ProdutTable(props) {
 
     const getAllProduct = () =>{
         axios
-        .get("http://localhost:3000/admin/getAllproducts")
+        .get("/admin/getAllproducts")
         .then((response) => {
           const data = response.data.product
           setProduct(data) 

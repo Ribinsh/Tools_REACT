@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../../axios';
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +12,7 @@ function ForgotPassword() {
   const handleSubmit = (event) => {
     event.preventDefault();
     
-    axios.post('http://localhost:3000/changePassword', {email, newPassword}).then((response)=>{
+    axios.post('/changePassword', {email, newPassword}).then((response)=>{
         
         if(response){
          

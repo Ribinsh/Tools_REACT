@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from '../../../axios'
 import { useNavigate } from 'react-router-dom'
 import React, { useState } from 'react'
 import { toast } from 'react-hot-toast'
@@ -13,7 +13,7 @@ function AdminLogin() {
     const adminLog = (e)=>{
         e.preventDefault()
 
-        axios.post("http://localhost:3000/admin/adminLogin",{
+        axios.post("/admin/adminLogin",{
             email,
             password
         }).then((response)=>{

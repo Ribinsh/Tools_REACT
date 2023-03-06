@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../../axios";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -7,7 +7,7 @@ import ReactDOM from "react-dom";
 
 function Orders() {
   const PayPalButton = paypal.Buttons.driver("react", { React, ReactDOM });
-  // const [isPaypal, setIsPaypal] = useState(false);
+ 
   const [bookings, setBookings] = useState([]);
   const [orderId, setOrderId] = useState("");
   const [amount,setAmount] = useState("")
@@ -28,7 +28,7 @@ const options = { year: 'numeric', month: 'long', day: 'numeric' };
    }
   const getBookings = () => {
     axios
-      .get("http://localhost:3000/getBooking", {
+      .get("/getBooking", {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
@@ -68,7 +68,7 @@ const options = { year: 'numeric', month: 'long', day: 'numeric' };
   const onApprove = async (data, actions) => {
       
     axios
-    .post("http://localhost:3000/payAmount",  {orderId}, {
+    .post("/payAmount",  {orderId}, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },

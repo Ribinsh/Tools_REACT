@@ -2,7 +2,7 @@ import React  from 'react'
 import './Login.css'
 import { Link, useNavigate } from 'react-router-dom'
 import {  useFormik } from 'formik'
-import axios from 'axios'
+import axios from '../../../axios'
 import { toast } from 'react-hot-toast'
 import { loginValidation } from '../../../middlewares/validationHelper'
 
@@ -22,7 +22,7 @@ function Login() {
     onSubmit: async (values) => {
       try{
 
-        axios.post('http://localhost:3000/doLogin',{values}).then((response)=>{
+        axios.post('/doLogin',{values}).then((response)=>{
          console.log(response);
          
          if(response){

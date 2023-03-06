@@ -10,7 +10,6 @@ import worker from "../../../assets/images/work/worker.png";
 import diy from "../../../assets/images/work/diy.png";
 import general from "../../../assets/images/work/general.png";
 import { Link, useLocation } from "react-router-dom";
-// import { StarIcon } from '@heroicons/react/solid'
 
 function Items() {
   const [product, setProduct] = useState([]);
@@ -297,11 +296,7 @@ function Items() {
                 <p className="text-gray-500">Brand:{product.brandName}</p>
                 <h3>{product.category}</h3>
                 <div className="flex items-center my-2">
-                  {/* <StarIcon className="w-5 h-5 text-yellow-500" />
-       <StarIcon className="w-5 h-5 text-yellow-500" />
-       <StarIcon className="w-5 h-5 text-yellow-500" />
-       <StarIcon className="w-5 h-5 text-yellow-500" />
-       <StarIcon className="w-5 h-5 text-gray-400" /> */}
+         
                   <span className="ml-2 text-gray-600">{product.details}</span>
                 </div>
                 <p className="text-teal-600 font-medium">
