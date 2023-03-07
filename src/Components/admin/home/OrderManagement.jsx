@@ -8,8 +8,10 @@ import axios from "../../../axios";
 function OrderManagement() {
   const location = useLocation();
   const orderId = location?.state;
-  const [orderDetails, setOrderDetails] = useState("");
+  const [orderDetails, setOrderDetails] = useState('');
   const [updation,setUpdation] = useState('')
+
+  const image = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png"
 
   const options = { month: "long", day: "numeric" };
   const formattedDate = (date) => {
@@ -42,7 +44,7 @@ function OrderManagement() {
         setUpdation("Order status updated")
       })
       .catch((error) => {
-        console.log(error);
+        
         if (error.response) {
           toast.error(error.response.data.error);
         } else {
@@ -50,7 +52,7 @@ function OrderManagement() {
         }
       });
   }
-
+  
   const getOrderDetails = () => {
     axios
       .get(`/admin/getOrderDetails/${orderId}`)
@@ -86,11 +88,11 @@ function OrderManagement() {
             class="flex items-center justify-between gap-4 text-xs font-bold uppercase text-gray-900"
           >
                {" "}
-            { /* <span>{formattedDate(orderDetails.dates[0])}</span> */}
-            <span>March 8</span>
+             <span>{orderDetails?  formattedDate(orderDetails?.dates[0]) : ""}</span> 
+          
             <span class="w-px flex-1 bg-gray-900/10"></span>
-            {/* <span>{formattedDate(orderDetails.dates[dates.length-1])}</span> */}
-            <span>March 10</span>
+            <span>{orderDetails? formattedDate(orderDetails?.dates[orderDetails?.dates.length-1]) : ""}</span>
+            
           </time>
         </div>
 
@@ -98,9 +100,9 @@ function OrderManagement() {
           <img
             alt="Guitar"
             src=
-            "https://images.unsplash.com/photo-1609557927087-f9cf8e88de18?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+            // "https://images.unsplash.com/photo-1609557927087-f9cf8e88de18?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
            
-            // {orderDetails.productId.imageUrl}
+            {orderDetails?.productId?.imageUrl}
             class="aspect-square h-full w-full object-cover"
           />
         </div>
@@ -109,9 +111,9 @@ function OrderManagement() {
           <div class="border-l border-gray-900/10 p-4 sm:border-l-transparent sm:p-6">
             <a href="">
               <h3 class="font-bold uppercase text-gray-900">
-                $ ProductName
+                {/* $ ProductName */}
                 {" "}
-                {/* {orderDetails.productId.productName} */}
+                {orderDetails?.productId?.productName}
               </h3>
             </a>
 
@@ -309,48 +311,35 @@ function OrderManagement() {
         <div class="sm:flex sm:justify-between sm:gap-4">
           <div>
             <h3 class="text-lg font-bold text-gray-900 sm:text-xl">
-                Ribinsh 
-              {/* {orderDetails.userId.name} */}
+                
+              {orderDetails?.userId?.name}
             </h3>
 
-            <p class="mt-1 text-xs font-medium text-gray-600">Engineer</p>
+            <p class="mt-1 text-xs font-medium text-gray-600">{orderDetails?.userId?.profession}</p>
           </div>
 
           <div class="hidden sm:block sm:shrink-0">
             <img
               alt="Paul Clapton"
-              src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
+              src={orderDetails?.userId?.imageUrl || image }
               class="h-16 w-16 rounded-lg object-cover shadow-sm"
             />
           </div>
         </div>
 
         <div class="mt-4">
-          {/* <p class="max-w-[40ch] text-sm text-gray-500">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. At velit
-            illum provident a, ipsa maiores deleniti consectetur nobis et eaque.
-          </p> */}
-          <span>Phone: 8715350500</span>
+          
+          <span>Phone: {orderDetails?.userId?.phone}</span>
         </div>
         <div>
-        <span>Email: ribinshp&@gmail.com</span>
+        <span>Email: {orderDetails?.userId?.email}</span>
         </div>
         <div>
-        <span>Address: </span>
+        <span>Address: {orderDetails?.userId?.address  || "Not added"} </span>
         </div>
 
 
-        <dl class="mt-6 flex gap-4 sm:gap-6">
-          <div class="flex flex-col-reverse">
-            <dt class="text-sm font-medium text-gray-600">Published</dt>
-            <dd class="text-xs text-gray-500">31st June, 2021</dd>
-          </div>
-
-          <div class="flex flex-col-reverse">
-            <dt class="text-sm font-medium text-gray-600">Reading time</dt>
-            <dd class="text-xs text-gray-500">3 minute</dd>
-          </div>
-        </dl>
+        
       </a>
     </div>
   );

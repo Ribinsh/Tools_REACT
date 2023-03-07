@@ -8,17 +8,69 @@ import axios from "../../../axios";
 function Profile() {
   const navigate = useNavigate();
   const [user, setUser] = useState("");
-
+  const cloudAPI = "dk0cl9vtx";
   const [visible, setVisible] = useState(false);
+
   const [address, setAddress] = useState("");
   const [image, setImage] = useState("");
   const [gender, setGender] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
 
   const options = { year: "numeric", month: "long", day: "numeric" };
   const formattedDate = (date) => {
     const dateObj = new Date(date);
     const updatedDate = dateObj.toLocaleDateString("en-US", options);
     return updatedDate;
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    toast.loading("Updating");
+    const formData = new FormData();
+    formData.append("file", image);
+    formData.append("upload_preset", "product Image");
+    await axios
+      .post(
+        `https://api.cloudinary.com/v1_1/${cloudAPI}/image/upload`,
+        formData
+      )
+      .then(async (res) => {
+        const imageUrl = res.data.secure_url;
+        toast.dismiss();
+
+        await axios
+          .post(
+            `/updateProfile/${user._id}`,
+            {
+              name,
+              email,
+              phone,
+              address,
+              gender,
+              imageUrl,
+            },
+            {
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+              },
+            }
+          )
+          .then((response) => {
+            if (response) {
+              toast.success("Updated  Successfully");
+              setVisible(false);
+            }
+          })
+          .catch((error) => {
+            if (error.response) {
+              toast.error(error.response.data.error);
+            } else {
+              toast.error(error.message);
+            }
+          });
+      });
   };
 
   const getProfile = () => {
@@ -30,8 +82,14 @@ function Profile() {
       })
       .then((response) => {
         let userData = response.data.userData;
-        console.log(userData);
+
         setUser(userData);
+        setName(userData.name);
+        setEmail(userData.email);
+        setImage(userData.imageUrl);
+        setPhone(userData.phone);
+        setGender(userData.gender);
+        setAddress(userData.address);
       })
       .catch((error) => {
         console.log(error);
@@ -62,11 +120,19 @@ function Profile() {
           </div>
 
           <div class="hidden sm:block sm:shrink-0">
-            <img
-              alt="Paul Clapton"
-              src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
-              class="h-40 w-40 rounded-lg object-cover shadow-sm"
-            />
+            {user.imageUrl === "Not added" ? (
+              <img
+                alt="Paul Clapton"
+                src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
+                class="h-40 w-40 rounded-lg object-cover shadow-sm"
+              />
+            ) : (
+              <img
+                alt="Paul Clapton"
+                src={user.imageUrl}
+                class="h-40 w-40 rounded-lg object-cover shadow-sm"
+              />
+            )}
           </div>
         </div>
 
@@ -132,7 +198,7 @@ function Profile() {
                       Add
                     </button>
                   ) : (
-                    <span class="text-gray-700"> Added</span>
+                    <span class="text-gray-700"> {user.gender}</span>
                   )}
                 </li>
 
@@ -149,10 +215,20 @@ function Profile() {
                       Add
                     </button>
                   ) : (
-                    <span class="text-gray-700"> Added</span>
+                    <span class="text-gray-700">{user.address}</span>
                   )}
                 </li>
               </ul>
+              { user.imageUrl !== "Not added" &&
+
+              <div className="flex justify-end mt-3">
+                <button
+                onClick={()=> {
+                    setVisible(true)
+                }}
+                 className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-sky-300 rounded-md hover:bg-emerald-700 focus:outline-none focus:bg-gray-600">Edit </button>
+              </div>
+              }
             </div>
           </div>
 
@@ -160,7 +236,7 @@ function Profile() {
             <section
               className={`  p-6 mx-auto bg-indigo-600 ${
                 visible ? "visible" : "invisible"
-              }  rounded-md shadow-xl dark:bg-gray-800 mt-20`}
+              }  rounded-md shadow-xl dark:bg-gray-800 `}
             >
               <h1 className="text-xl font-bold text-white capitalize dark:text-white">
                 Profile settings
@@ -170,12 +246,12 @@ function Profile() {
                   onClick={() => {
                     setVisible(false);
                   }}
-                  className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-green-500 rounded-md hover:bg- focus:outline-none focus:bg-gray-600"
+                  className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-red-500 rounded-md hover:bg- focus:outline-none focus:bg-gray-600"
                 >
                   Close
                 </button>
               </div>
-              <form onSubmit={{}}>
+              <form onSubmit={handleUpdate}>
                 <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                   <div>
                     <label className="block text-sm font-medium text-white">
@@ -184,19 +260,22 @@ function Profile() {
                     <div className=" flex justify-center px-3  pb-4 border-2 border-gray-300 border-dashed rounded-md">
                       <div className="space-y-1 text-center">
                         <div className="flex justify-center">
-                          <img
-                            class="w-20 border-4 border-white rounded-full"
-                            // src={profileUrl}
-                            alt="notget"
-                          />
+                          {image && (
+                            <img
+                              class="w-20 border-4 border-white rounded-full"
+                              src={image}
+                              alt="notget"
+                            />
+                          )}
                         </div>
                         <div className="flex text-sm text-gray-600">
                           <label
                             for="file-upload"
                             className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                           >
-                            <span className="">Upload a your photo</span>
+                            <span className="">Upload your photo</span>
                             <input
+                              required
                               onChange={(e) => {
                                 setImage(e.target.files[0]);
                               }}
@@ -215,11 +294,62 @@ function Profile() {
                       className="text-white dark:text-gray-200"
                       for="passwordConfirmation"
                     >
+                      Name
+                    </label>
+                    <input
+                      value={name}
+                      onChange={(e) => {
+                        setName(e.target.value);
+                      }}
+                      id="number"
+                      type="text"
+                      className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      className="text-white dark:text-gray-200"
+                      for="passwordConfirmation"
+                    >
+                      Email
+                    </label>
+                    <input
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
+                      id="number"
+                      type="Text"
+                      className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      className="text-white dark:text-gray-200"
+                      for="passwordConfirmation"
+                    >
+                      Phone
+                    </label>
+                    <input
+                      value={phone}
+                      onChange={(e) => {
+                        setPhone(e.target.value);
+                      }}
+                      id="number"
+                      type="Text"
+                      className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      className="text-white dark:text-gray-200"
+                      for="passwordConfirmation"
+                    >
                       Gender
                     </label>
                     <select
                       className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                      //   value={position}
+                      value={gender}
                       onChange={(e) => {
                         setGender(e.target.value);
                       }}
@@ -238,7 +368,7 @@ function Profile() {
                       ADDRESS
                     </label>
                     <textarea
-                      //   value={address}
+                      required
                       onChange={(e) => {
                         setAddress(e.target.value);
                       }}
@@ -252,9 +382,9 @@ function Profile() {
                 <div className="flex justify-end mt-6">
                   <button
                     type="submit"
-                    className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-pink-500 rounded-md hover:bg-pink-700 focus:outline-none focus:bg-gray-600"
+                    className="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-emerald-300 rounded-md hover:bg-emerald-700 focus:outline-none focus:bg-gray-600"
                   >
-                    Save
+                    Update
                   </button>
                 </div>
               </form>

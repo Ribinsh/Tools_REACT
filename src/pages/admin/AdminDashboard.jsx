@@ -6,6 +6,7 @@ import Graph from "../../Components/admin/home/Graph";
 import Chart from "../../Components/admin/home/Chart";
 import SalesReport from "../../Components/admin/home/SalesReport";
 import DownloadButton from "../../Components/admin/home/DownloadButton";
+import PdfFile from "../../Components/admin/home/PdfFile";
 
 function AdminDashboard() {
   return (
@@ -18,9 +19,16 @@ function AdminDashboard() {
           <Graph />
           <Chart />
         </div>
+
         <SalesReport />
         <DownloadButton />
+        <div className="invisible">
+
+        < PdfFile />
+        </div>
       </div>
+     
+      
     </div>
   );
 }
