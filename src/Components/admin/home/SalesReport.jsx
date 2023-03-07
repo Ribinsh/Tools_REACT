@@ -1,6 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
+import { useEffect } from "react";
+import DatePicker from "react-date-picker";
+import axios from "../../../axios";
 
 function SalesReport() {
+    const [selectedDate , setSelectedDate] = useState(new Date())
+
+    const [data,setData] = useState('')
+   
+    const  getDetails = () => {
+        axios.post("/admin/getDaySales" ,{date:selectedDate})
+        .then((response)=> {
+           
+            setData(response.data.result)
+           
+        })   
+    }
+
+    useEffect(() => {
+       getDetails()
+    },[selectedDate])
+
+    
   return (
 
    
@@ -19,13 +40,13 @@ function SalesReport() {
                   assumenda? Deleniti quasi inventore, libero reiciendis minima
                   aliquid tempora. Obcaecati, autem.
                 </p>
-
-                <a
-                  href="#"
-                  class="mt-8 inline-block rounded bg-indigo-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-yellow-400"
-                >
-                  Change the day
-                </a>
+                <h1 className=" mt-10 text-lg text-emerald-500"> Change date</h1>
+                <DatePicker
+                  selected={selectedDate}
+                  onChange={(date) => setSelectedDate(date)}
+                  dateFormat="MM/dd/yyyy"
+                  className="block w-full px-4 py-2 mt-2 text-lg text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                 />
               </div>
 
               <div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
@@ -54,7 +75,7 @@ function SalesReport() {
 
                   <h2 class="mt-2 font-bold">Sales</h2>
 
-                  <h1 class=" text-center text-3xl  sm:text-gray-600 ">2</h1>
+                  <h1 class=" text-center text-3xl  sm:text-gray-600 ">{data?.total_sales}</h1>
                 </a>
 
                 <a
@@ -80,9 +101,9 @@ function SalesReport() {
                     </svg>
                   </span>
 
-                  <h2 class="mt-2 font-bold">Orders Completed</h2>
+                  <h2 class="mt-2 font-bold">Total  Orders </h2>
 
-                  <h1 class=" text-center text-3xl  sm:text-gray-600 ">1</h1>
+                  <h1 class=" text-center text-3xl  sm:text-gray-600 ">{data?.completed_orders}</h1>
                 </a>
 
                 <a
@@ -108,9 +129,9 @@ function SalesReport() {
                     </svg>
                   </span>
 
-                  <h2 class="mt-2 font-bold">Total Bookings</h2>
-
-                  <h1 class=" text-center text-3xl  sm:text-gray-600 ">11</h1>
+                  <h2 class="mt-2 font-bold">completed Orders</h2>
+                  
+                  <h1 class=" text-center text-3xl  sm:text-gray-600 ">{data?.completed_orders}</h1>
                 </a>
 
                 <a
@@ -138,7 +159,7 @@ function SalesReport() {
 
                   <h2 class="mt-2 font-bold">New Bookings</h2>
 
-                  <h1 class=" text-center text-3xl  sm:text-gray-600 ">3</h1>
+                  <h1 class=" text-center text-3xl  sm:text-gray-600 ">{data?.new_orders}</h1>
                 </a>
 
                 <a
@@ -164,9 +185,9 @@ function SalesReport() {
                     </svg>
                   </span>
 
-                  <h2 class="mt-2 font-bold">Payments Today</h2>
+                  <h2 class="mt-2 font-bold">online Payments </h2>
 
-                  <h1 class=" text-center text-3xl  sm:text-gray-600 ">0</h1>
+                  <h1 class=" text-center text-3xl  sm:text-gray-600 ">{data?.onlinePayment}</h1>
                 </a>
 
                 <a
@@ -192,9 +213,9 @@ function SalesReport() {
                     </svg>
                   </span>
 
-                  <h2 class="mt-2 font-bold">Dealyed</h2>
+                  <h2 class="mt-2 font-bold">Payment pending</h2>
 
-                  <h1 class=" text-center text-3xl  sm:text-gray-600 ">0</h1>
+                  <h1 class=" text-center text-3xl  sm:text-gray-600 ">{data?.notPaid}</h1>
                 </a>
               </div>
             </div>

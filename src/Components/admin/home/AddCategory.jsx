@@ -79,6 +79,8 @@ function AddCategory(props) {
                   {/* <button className=" bg-orange-300  rounded-sm text-lg text-black px-2 p-1">
                        Delete
                   </button> */}
+
+                  {props.from ==="admin" &&
                   <Link
                    to= "/admin/newCategory"
                    state={data._id} 
@@ -87,6 +89,7 @@ function AddCategory(props) {
                        Edit
                   </button>
                   </Link>
+                  }
                 </div>
                 </div>
               </article>

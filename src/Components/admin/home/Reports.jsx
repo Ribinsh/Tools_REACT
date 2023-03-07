@@ -3,10 +3,12 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import axios from '../../../axios'
 
+
 function Reports() {
-    const [totalSales ,setTotalSales] = useState()
+    const [totalSales ,setTotalSales] = useState('')
     const [totalUsers, setTotalUsers] = useState()
     const [totalProducts, setTotalProducts] = useState()
+    
 
   const getTotalSales =() => {
       axios.get("/admin/getTotalSales")

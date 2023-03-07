@@ -32,10 +32,13 @@ function PdfFile() {
 
     const [monthsale,setMonthSale]  = useState()
     const [monthOrder,setMonthOrder] = useState()
+    const [selectedDate , setSelectedDate] = useState(new Date())
+    const [data,setData] = useState('')
+
 
     const getMonthsales = () => {
         
-        axios.get("/admin//getMonthOrder").then((response)=> {
+        axios.get("/admin/getMonthOrder").then((response)=> {
             let data = response.data.sales
             setMonthSale(data)
           })
@@ -43,10 +46,19 @@ function PdfFile() {
 
     const getMonthOrders = () => {
         
-        axios.get("/admin//getMonthBooking").then((response)=> {
+        axios.get("/admin/getMonthBooking").then((response)=> {
             let data = response.data.orders
             setMonthOrder(data)
           })
+    }
+
+    const salesToday = () => {
+        axios.post("/admin/getDaySales" ,{date:selectedDate})
+        .then((response)=> {
+           
+            setData(response.data.result)
+           
+        })  
     }
 
 
@@ -55,6 +67,7 @@ function PdfFile() {
     useEffect(() => {
         getMonthsales()
         getMonthOrders()
+        salesToday()
     },[])
 
  
@@ -84,9 +97,11 @@ function PdfFile() {
     <View style={{ marginTop: 30 }}>
       <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Sales Today:</Text>
       <View style={{ marginTop: 10 }}>
-        <Text style={{ fontSize: 16 }}>1.New orders - $15,000</Text>
-        <Text style={{ fontSize: 16 }}>2. Payments - $10,000</Text>
-        <Text style={{ fontSize: 16 }}>3.Completed Orders - $8,000</Text>
+        <Text style={{ fontSize: 16 }}>1.New sales - {data?.total_sales}</Text>
+        <Text style={{ fontSize: 16 }}>1.New orders - {data?.total_orders}</Text>
+        <Text style={{ fontSize: 16 }}>2.Payments - {data?.onlinePayment}</Text>
+        
+        <Text style={{ fontSize: 16 }}>3.Completed Orders - {data?.products_delivered}</Text>
       </View>
     </View>
     
