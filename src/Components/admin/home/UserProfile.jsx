@@ -99,7 +99,7 @@ function userProfile() {
         </div>
         <div class="flex flex-col items-center -mt-20">
           <img
-            src="https://us.123rf.com/450wm/lacheev/lacheev2109/lacheev210900016/lacheev210900016.jpg?ver=6"
+            src= {user?.imageUrl  || "https://us.123rf.com/450wm/lacheev/lacheev2109/lacheev210900016/lacheev210900016.jpg?ver=6"}
             class="w-40 border-4 border-white rounded-full"
           />
           <div class="flex items-center space-x-2 mt-2">
@@ -205,18 +205,7 @@ function userProfile() {
             <div class="flex-1 bg-white rounded-lg shadow-xl p-8">
               <h4 class="text-xl text-gray-900 font-bold">About</h4>
               <p class="mt-2 text-gray-700">
-                Contrary to popular belief, Lorem Ipsum is not simply random
-                text. It has roots in a piece of classical Latin literature from
-                45 BC, making it over 2000 year Richard McClintock, a Latin
-                professor at Hampden-Sydney College in Virginia, looked up one
-                of the more obscure Latin words, consecteturLorem ipsum dolor
-                sit amet consectetur adipisicing elit. Nesciunt voluptates
-                obcaecati numquam error et ut fugiat asperiores. Sunt nulla ad
-                incidunt laboriosam, laudantium est unde natus cum numquam,
-                neque facere. Lorem ipsum dolor sit amet consectetur adipisicing
-                elit. Ut, magni odio magnam commodi sunt ipsum eum! Voluptas
-                eveniet aperiam at maxime, iste id dicta autem odio laudantium
-                eligendi commodi distinctio!
+               A verfied user for toools
               </p>
             </div>
             
