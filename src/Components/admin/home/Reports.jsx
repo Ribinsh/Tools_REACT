@@ -13,14 +13,14 @@ function Reports() {
   const getTotalSales =() => {
       axios.get("/admin/getTotalSales")
       .then((response) => {
-        setTotalSales(response.data.totalOrders)
+        setTotalSales(response?.data?.totalOrders)
       })
 
   }
   const getTotalUsers =() => {
     axios.get("/admin/getTotalUsers")
     .then((response) => {
-      setTotalUsers(response.data.totalUsers)
+      setTotalUsers(response?.data?.totalUsers)
     })
 
 }
@@ -28,7 +28,7 @@ function Reports() {
 const getTotalProducts =() => {
     axios.get("/admin/getTotalProducts")
     .then((response) => {
-      setTotalProducts(response.data.totalProducts)
+      setTotalProducts(response?.data?.totalProducts)
     })
 
 }

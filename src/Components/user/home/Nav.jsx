@@ -19,7 +19,7 @@ function Nav() {
   <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
     <div class="flex h-16 items-center justify-between">
       <div class="md:flex md:items-center ">
-        <a class="block text-teal-600"  onClick={()=>{
+        {/* <a class="block text-teal-600"  onClick={()=>{
           navigate('/')
         }}>
           <span class="sr-only">Home</span>
@@ -34,7 +34,7 @@ function Nav() {
               fill="currentColor"
             />
           </svg>
-        </a>
+        </a> */}
         <Link to={"/"}>
         <h1 className="flex py-5  cursor-pointer    font-bold text-2xl  text-teal-600">
          Toools

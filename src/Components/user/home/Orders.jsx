@@ -158,6 +158,18 @@ const options = { year: 'numeric', month: 'long', day: 'numeric' };
                           Booked{" "}
                         </span>
                       )}
+                       {data.orderStatus === "Pending" && (
+                        <span className="px-2 py-1 font-semibold leading-tight text-red-700 bg-orange-300 rounded-sm">
+                          {" "}
+                          Pending{" "}
+                        </span>
+                      )}
+                       {data.orderStatus === "Canceled" && (
+                        <span className="px-2 py-1 font-semibold leading-tight text-red-700 rounded-sm">
+                          {" "}
+                          Canceled{" "}
+                        </span>
+                      )}
                       {data.orderStatus === "Renting" && (
                         <span className="px-2 py-1 font-semibold leading-tight text-yellow-500 bg-gray-100 rounded-sm">
                           
@@ -172,6 +184,9 @@ const options = { year: 'numeric', month: 'long', day: 'numeric' };
                       )}
                     </td>
                     <td className="px-4 py-3 text-xs border">
+
+                  
+
                       {data.paymentStatus === "Not paid" ? (
                         data._id === orderId ? (
                           <PayPalButton
