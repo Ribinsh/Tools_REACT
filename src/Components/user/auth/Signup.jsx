@@ -22,7 +22,7 @@ function Signup() {
     onSubmit: async (values) => {
       console.log(values);
       await axios
-        .post("http://localhost:3000/sendOtp", values)
+        .post("/sendOtp", values)
         .then(() => {
           toast.success("Registration successful");
 
