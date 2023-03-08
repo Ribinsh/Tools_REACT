@@ -44,7 +44,7 @@ function SalesReport() {
                 <p class="mt-4 text-gray-600">
                 Here you can see the total sales and orders of the day , You can also find the total orders completed and pending. By using the date picker you can choose whatever date you want and the report card will be changed on the basis of the choosen date
                 </p>
-                <h1 className=" mt-10 text-lg text-sky-400">{formattedDate( selectedDate)}</h1>
+               
                 <h1 className=" mt-10 text-lg text-emerald-500"> Change date</h1>
                 <DatePicker
                   selected={selectedDate}
@@ -52,6 +52,7 @@ function SalesReport() {
                   dateFormat="MM/dd/yyyy"
                   className="block w-full px-4 py-2 mt-2 text-lg text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                  />
+                  <h1 className=" mt-2 text-lg text-sky-400">{formattedDate( selectedDate)}</h1>
               </div>
 
               <div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
