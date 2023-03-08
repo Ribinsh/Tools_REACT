@@ -33,7 +33,7 @@ function dashBoard(props) {
             <div class="space-y-6 md:space-y-10 mt-5">
               <div id="profile" class="space-y-3">
                 <img
-                  src="https://cdn.w600.comps.canstockphoto.com/letter-t-sign-design-template-element-image_csp44645575.jpg"
+                  src="https://res.cloudinary.com/dk0cl9vtx/image/upload/v1678255787/logo/logo-color_uxlnzj.svg"
                   alt="Avatar user"
                   class="w-10 md:w-16 rounded-full mx-auto"
                 />
