@@ -20,7 +20,7 @@ function Signup() {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: async (values) => {
-      console.log(values);
+      
       await axios
         .post("/sendOtp", values)
         .then(() => {
@@ -29,7 +29,7 @@ function Signup() {
           navigate("/otp", { replace: true });
         })
         .catch((error) => {
-          console.log(error);
+         
           toast.error(error.response.data.error);
         });
     },

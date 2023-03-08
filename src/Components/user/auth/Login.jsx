@@ -23,10 +23,9 @@ function Login() {
       try{
 
         axios.post('/doLogin',{values}).then((response)=>{
-         console.log(response);
-         
+        
          if(response){
-           console.log(response.data);
+          
            let {token} = response.data
            localStorage.setItem('token', JSON.stringify(token))
            toast.success('login successful')
@@ -58,7 +57,7 @@ function Login() {
               <div class="rounded-xl bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
                 <div class="text-black">
                   <div class="mb-8 flex flex-col items-center">
-                    <img src="https://res.cloudinary.com/dk0cl9vtx/image/upload/v1678255787/logo/logo-color_uxlnzj.svg" width="150" alt="" srcset="" />
+                    <img className='w-10 md:w-16 rounded-full mx-auto' src="https://res.cloudinary.com/dk0cl9vtx/image/upload/v1678255787/logo/logo-color_uxlnzj.svg" width="150" alt="" srcset="" />
                     <h1 class="mb-2   text-teal-600 text-2xl">Toools</h1>
                     <span class="text-gray-300">Enter Login Details</span>
                   </div>
