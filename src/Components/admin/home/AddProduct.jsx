@@ -178,7 +178,7 @@ function AddProduct() {
                 </a>
 
                 <address class="mt-2 not-italic">
-                  282 Kevin Brook, Imogeneborough, CA 58517
+                 Toool Calicut store , kerala
                 </address>
               </div>
             </div>

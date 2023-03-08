@@ -7,6 +7,13 @@ function SalesReport() {
     const [selectedDate , setSelectedDate] = useState(new Date())
 
     const [data,setData] = useState('')
+
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    const formattedDate = (date) => {
+      const dateObj = new Date(date);
+      const updatedDate = dateObj.toLocaleDateString("en-US", options);
+      return updatedDate;
+    };
    
     const  getDetails = () => {
         axios.post("/admin/getDaySales" ,{date:selectedDate})
@@ -35,8 +42,9 @@ function SalesReport() {
                 </h2>
 
                 <p class="mt-4 text-gray-600">
-                Here you can see the total sales and orders of the day , You can also find the total orders completed and pending. By using the date picker you can choose whatever date you want and the report card will be changed on the basis of thw choosen date
+                Here you can see the total sales and orders of the day , You can also find the total orders completed and pending. By using the date picker you can choose whatever date you want and the report card will be changed on the basis of the choosen date
                 </p>
+                <h1 className=" mt-10 text-lg text-sky-400">{formattedDate( selectedDate)}</h1>
                 <h1 className=" mt-10 text-lg text-emerald-500"> Change date</h1>
                 <DatePicker
                   selected={selectedDate}
