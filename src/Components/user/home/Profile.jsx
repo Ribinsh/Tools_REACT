@@ -10,6 +10,7 @@ function Profile() {
   const [user, setUser] = useState("");
   const cloudAPI = "dk0cl9vtx";
   const [visible, setVisible] = useState(false);
+  const [updation,setUpdation] = useState('not Updated')
 
   const [address, setAddress] = useState("");
   const [image, setImage] = useState("");
@@ -61,6 +62,7 @@ function Profile() {
             if (response) {
               toast.success("Updated  Successfully");
               setVisible(false);
+              setUpdation("updated")
             }
           })
           .catch((error) => {
@@ -103,7 +105,7 @@ function Profile() {
 
   useEffect(() => {
     getProfile();
-  }, []);
+  }, [updation]);
 
   return (
     <div className="bg-emerald-100">
