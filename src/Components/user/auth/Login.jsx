@@ -58,7 +58,7 @@ function Login() {
               <div class="rounded-xl bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
                 <div class="text-black">
                   <div class="mb-8 flex flex-col items-center">
-                    <img src="https://cdn.w600.comps.canstockphoto.com/letter-t-sign-design-template-element-image_csp44645575.jpg" width="150" alt="" srcset="" />
+                    <img src="https://res.cloudinary.com/dk0cl9vtx/image/upload/v1678255787/logo/logo-color_uxlnzj.svg" width="150" alt="" srcset="" />
                     <h1 class="mb-2   text-teal-600 text-2xl">Toools</h1>
                     <span class="text-gray-300">Enter Login Details</span>
                   </div>
