@@ -35,10 +35,7 @@ function SalesReport() {
                 </h2>
 
                 <p class="mt-4 text-gray-600">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut
-                  vero aliquid sint distinctio iure ipsum cupiditate? Quis, odit
-                  assumenda? Deleniti quasi inventore, libero reiciendis minima
-                  aliquid tempora. Obcaecati, autem.
+                Here you can see the total sales and orders of the day , You can also find the total orders completed and pending. By using the date picker you can choose whatever date you want and the report card will be changed on the basis of thw choosen date
                 </p>
                 <h1 className=" mt-10 text-lg text-emerald-500"> Change date</h1>
                 <DatePicker
