@@ -9,6 +9,13 @@ function userProfile() {
     const [block, setBlock] = useState("newUser")
     const userId = location?.state
 
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    const formattedDate = (date) => {
+      const dateObj = new Date(date);
+      const updatedDate = dateObj.toLocaleDateString("en-US", options);
+      return updatedDate;
+    };
+
     const [user,setUser] = useState('')
 
     const blockUser  = ()=>{
@@ -164,24 +171,24 @@ function userProfile() {
               <ul class="mt-2 text-gray-700">
                 <li class="flex border-y py-2">
                   <span class="font-bold w-24">Full name:</span>
-                  <span class="text-gray-700">{user.name}</span>
+                  <span class="text-gray-700">{user?.name}</span>
                 </li>
                 <li class="flex border-y py-2">
                   <span class="font-bold w-24"> Rentings:</span>
-                  <span class="text-green-600 font-bold ">{user.Rentings}</span>
+                  <span class="text-green-600 font-bold ">{user?.Rentings}</span>
                 </li>
                
                 <li class="flex border-b py-2">
                   <span class="font-bold w-24">Joined:</span>
-                  <span class="text-gray-700">{user.joined}</span>
+                  <span class="text-gray-700">{formattedDate(user?.joined) }</span>
                 </li>
                 <li class="flex border-b py-2">
                   <span class="font-bold w-24">Mobile:</span>
-                  <span class="text-gray-700">{user.phone}</span>
+                  <span class="text-gray-700">{user?.phone}</span>
                 </li>
                 <li class="flex border-b py-2">
                   <span class="font-bold w-24">Email:</span>
-                  <span class="text-gray-700">{user.email}</span>
+                  <span class="text-gray-700">{user?.email}</span>
                 </li>
                 <li class="flex border-b py-2">
                   <span class="font-bold w-24">Location:</span>
@@ -189,12 +196,12 @@ function userProfile() {
                 </li>
                 <li class="flex border-b py-2">
                   <span class="font-bold w-24">Gender:</span>
-                  <span class="text-gray-700">{user.gender}</span>
+                  <span class="text-gray-700">{user?.gender}</span>
                 </li>
              
                 <li class="flex items-center border-b py-2 space-x-2">
                   <span class="font-bold w-24">Address:</span>
-                  <span class="text-gray-700">{user.address}</span>
+                  <span class="text-gray-700">{user?.address}</span>
                  
                 </li>
               </ul>
