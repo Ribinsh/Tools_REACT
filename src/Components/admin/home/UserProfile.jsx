@@ -93,7 +93,7 @@ function userProfile() {
         </div>
         <div class="w-full h-[250px]">
           <img
-            src="https://vojislavd.com/ta-template-demo/assets/img/profile-background.jpg"
+            src="https://res.cloudinary.com/dk0cl9vtx/image/upload/v1676526221/Products/ihkeznmllmlvb3wughma.png"
             class="w-full h-full rounded-tl-lg rounded-tr-lg"
           />
         </div>
