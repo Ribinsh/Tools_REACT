@@ -166,7 +166,7 @@ function UsersList() {
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
                                     <p class="text-green-600 font-bold">
-                                        {data.rentings}
+                                        {data.Rentings}
                                     </p>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">

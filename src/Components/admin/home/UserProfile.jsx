@@ -168,7 +168,7 @@ function userProfile() {
                 </li>
                 <li class="flex border-y py-2">
                   <span class="font-bold w-24"> Rentings:</span>
-                  <span class="text-green-600 font-bold ">{user.rentings}</span>
+                  <span class="text-green-600 font-bold ">{user.Rentings}</span>
                 </li>
                
                 <li class="flex border-b py-2">
